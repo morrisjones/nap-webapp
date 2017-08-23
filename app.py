@@ -9,13 +9,18 @@ __cwd__ = os.path.dirname(os.path.realpath(__file__))
 
 @route('/')
 def index():
-  return template('<h1>{{message}}</h1>', message="North American Pairs")
+  return template('home')
 
-@route('/clubs')
+@route('/clubgames')
 def clubs():
   output = nap.main(__cwd__,["-c"])
-  return output
-  
+  return template('report',title='Qualifier games reported',report=output)
+
+@route('/summary')
+def clubs():
+  output = nap.main(__cwd__,["-s"])
+  return template('report',title='Summary of all qualifiers',report=output)
+
 
 if __name__ == '__main__':
   bottle.run(host='0.0.0.0', port=8080)
