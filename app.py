@@ -1,8 +1,7 @@
 import bottle
 
 import sys, os
-from bottle import route, template
-import StringIO
+from bottle import route, template, static_file
 from nap import nap
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
@@ -37,6 +36,10 @@ def fltc():
   output = nap.main(__cwd__,["-t",gamefile_tree,"-fc", "-v"])
   return template('report',title='Flight C Qualifiers',report=output)
 
+@route('/favicon.ico')
+def favicon():
+  return static_file("favicon.ico", root="./static/img")
+  
 if __name__ == '__main__':
   bottle.run(host='0.0.0.0', port=8080)
 else:
