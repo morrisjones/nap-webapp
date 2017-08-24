@@ -1,7 +1,7 @@
 import bottle
 
 import sys, os
-from bottle import route, template, static_file
+from bottle import route, template, static_file, get, post, request
 from nap import nap
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
@@ -39,6 +39,17 @@ def fltc():
 @route('/favicon.ico')
 def favicon():
   return static_file("favicon.ico", root="./static/img")
+
+@get('/submit_gamefile')
+def submit_gamefile_form():
+  return template('submit_gamefile_form')
+
+@post('/submit_gamefile_confirm')
+def submit_gamefile_result():
+  fields = {}
+  fields['clubname'] = request.forms.get('clubname')
+  fields['testfield'] = request.forms.get('testfield')
+  return template('submit_gamefile_confirm',fields)
   
 if __name__ == '__main__':
   bottle.run(host='0.0.0.0', port=8080)
