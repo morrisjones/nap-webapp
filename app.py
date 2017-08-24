@@ -6,33 +6,38 @@ from nap import nap
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 gamefile_tree = os.environ['GAMEFILE_TREE']
 
+# This is a cache of the existing gamefiles
+wnap = nap.Nap()
+wnap.load_games(gamefile_tree)
+wnap.load_players()
+
 @get('/')
 def index():
   return template('home')
 
 @get('/clubgames')
 def clubs():
-  output = nap.main(__cwd__,["-t",gamefile_tree,"-c"])
+  output = wnap.club_games()
   return template('report',title='Qualifier games reported',report=output)
 
 @get('/summary')
 def summary():
-  output = nap.main(__cwd__,["-t",gamefile_tree,"-s"])
+  output = wnap.summary_report()
   return template('report',title='Summary of all qualifiers',report=output)
 
 @get('/flta')
 def flta():
-  output = nap.main(__cwd__,["-t",gamefile_tree,"-fa", "-v"])
+  output = wnap.flight_report('a',True)
   return template('report',title='Flight A Qualifiers',report=output)
 
 @get('/fltb')
 def fltb():
-  output = nap.main(__cwd__,["-t",gamefile_tree,"-fb", "-v"])
+  output = wnap.flight_report('b',True)
   return template('report',title='Flight B Qualifiers',report=output)
 
 @get('/fltc')
 def fltc():
-  output = nap.main(__cwd__,["-t",gamefile_tree,"-fc", "-v"])
+  output = wnap.flight_report('c',True)
   return template('report',title='Flight C Qualifiers',report=output)
 
 @get('/favicon.ico')
