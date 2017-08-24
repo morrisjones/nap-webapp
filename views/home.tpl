@@ -13,6 +13,7 @@
 <h3><a href="/flta">Flight A with games</a></h3>
 <h3><a href="/fltb">Flight B with games</a></h3>
 <h3><a href="/fltc">Flight C with games</a></h3>
+<h3><a href="/submit_gamefile">Submit new game file</a></h3>
 
 <p><i>Hosted by</i> <a href="http://bridgemojo.com">BridgeMojo</a></p>
 
