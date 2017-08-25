@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+<%
+from __version__ import __version__
+version = __version__
+%>
 <head>
 <meta charset="UTF-8">
 <title>{{title}}</title>
@@ -46,8 +50,11 @@ body {
   </div>
 {{!base}}
 <div id="bottom" class="headfoot">
-<p>Hosted by <a href="http://bridgemojo.com">BridgeMojo</a></p>
-<p><a href="http://mail.bridgemojo.com/mailman/listinfo/napd23">Join the NAPD23 email list</a></p>
+<p>
+Hosted by <a href="http://bridgemojo.com">BridgeMojo</a><br/>
+<a href="http://mail.bridgemojo.com/mailman/listinfo/napd23">Join the NAPD23 email list</a><br/>
+Version {{version}}
+</p>
 </div>
 </div>
 </body>

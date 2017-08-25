@@ -3,4 +3,4 @@
 {{report}}
 </pre>
 <p>&nbsp;</p>
-<a href="/">Return to top</a>
+<p><a href="/">Return to home page</a></p>

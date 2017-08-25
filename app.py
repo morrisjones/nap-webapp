@@ -3,6 +3,7 @@ import sys, os, string, re
 from bottle import route, template, static_file, get, post, request, redirect
 from nap.nap import Nap
 from nap.gamefile import GamefileException
+from __version__ import __version__
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 gamefile_tree = os.environ['GAMEFILE_TREE']
