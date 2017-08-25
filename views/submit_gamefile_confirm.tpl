@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Submit Game File Result</title>
-</head>
-<body>
+% rebase('nap-frame.tpl',title='Confirm game file')
 <h1>Game File Information</h1>
 <p>Game File name: {{gamefile_name}}</p>
 <p>Club information found:<br/>
@@ -28,4 +22,3 @@
 <input type="submit" value="Submit"/>
 </form>
 </p>
-</body>

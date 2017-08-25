@@ -14,7 +14,7 @@ wnap.load_players()
 
 @get('/')
 def index():
-  return template('home')
+  return template('home',home=True)
 
 @get('/clubgames')
 def clubs():
@@ -131,7 +131,7 @@ def confirm_gamefile():
   return template('success')
 
 if __name__ == '__main__':
-  bottle.run(host='0.0.0.0', port=8080)
+  bottle.run(host='0.0.0.0', port=8080, reloader=True)
 else:
   app = application = bottle.default_app()
 

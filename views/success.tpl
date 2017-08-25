@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>List of Qualfier Games</title>
-</head>
-<body>
+% rebase('nap-frame.tpl',title='Game File Submitted')
 <h1>Game File Submitted Successfully</h1>
-
-<h3><a href="/">Return to top</a></h3>
-
-</body>
-</html>
+<h2><a href="/">Return to top</h2>
+<h2><a href="/clubgames">See report of club games</a></h2>

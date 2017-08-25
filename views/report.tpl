@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>{{title}}</title>
-</head>
-<body>
+% rebase('nap-frame.tpl')
 <pre>
 {{report}}
 </pre>
+<p>&nbsp;</p>
 <a href="/">Return to top</a>
-</body>
-</html>
