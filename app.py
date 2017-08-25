@@ -1,7 +1,7 @@
 import bottle
 import sys, os, string, re
 from bottle import route, template, static_file, get, post, request, redirect
-from nap import nap
+from nap.nap import Nap
 from nap.gamefile import GamefileException
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
@@ -13,41 +13,41 @@ def index():
 
 @get('/clubgames')
 def clubs():
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  output = wnap.club_games()
+  gnap = Nap()
+  gnap.load_games(gamefile_tree)
+  output = gnap.club_games()
   return template('report',title='Qualifier games reported',report=output)
 
 @get('/summary')
 def summary():
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  wnap.load_players()
-  output = wnap.summary_report()
+  gnap = Nap()
+  gnap.load_games(gamefile_tree)
+  gnap.load_players()
+  output = gnap.summary_report()
   return template('report',title='Summary of all qualifiers',report=output)
 
 @get('/flta')
 def flta():
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  wnap.load_players()
-  output = wnap.flight_report('a',True)
+  gnap = Nap()
+  gnap.load_games(gamefile_tree)
+  gnap.load_players()
+  output = gnap.flight_report('a',True)
   return template('report',title='Flight A Qualifiers',report=output)
 
 @get('/fltb')
 def fltb():
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  wnap.load_players()
-  output = wnap.flight_report('b',True)
+  gnap = Nap()
+  gnap.load_games(gamefile_tree)
+  gnap.load_players()
+  output = gnap.flight_report('b',True)
   return template('report',title='Flight B Qualifiers',report=output)
 
 @get('/fltc')
 def fltc():
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  wnap.load_players()
-  output = wnap.flight_report('c',True)
+  gnap = Nap()
+  gnap.load_games(gamefile_tree)
+  gnap.load_players()
+  output = gnap.flight_report('c',True)
   return template('report',title='Flight C Qualifiers',report=output)
 
 @get('/favicon.ico')
@@ -84,14 +84,24 @@ def submit_gamefile_result():
     error_msg = "Note: Replacing previous uploaded file"
   gf1_upload.save(gamefile_path)
 
-  upload_nap = nap.Nap()
   is_error = False
   try:
-    upload_nap.load_game(gamefile_path)
+    upload_nap = Nap()
+    upload_game = upload_nap.load_game(gamefile_path)
+    upload_game_key = upload_game.get_key()
     upload_nap.load_players()
   except GamefileException, e:
     is_error = True
     error_msg = e.value
+
+  # Check to see if this game is already in the data set
+  if not is_error:
+    gnap = Nap()
+    gnap.load_games(gamefile_tree)
+    all_games = gnap.games
+    if upload_game_key in all_games:
+      is_error = True
+      error_msg = "This game appears to be in the data set already."
 
   fields = {}
   fields['clubname'] = request.forms.get('clubname')
@@ -101,12 +111,12 @@ def submit_gamefile_result():
   fields['error_msg'] = error_msg
   fields['is_error'] = is_error
 
-  if is_error:
-    fields['club_info'] = ''
-    fields['player_summary'] = ''
-  else:
+  if not is_error:
     fields['club_info'] = upload_nap.club_games()
     fields['player_summary'] = upload_nap.summary_report()
+  else:
+    fields['club_info'] = ''
+    fields['player_summary'] = ''
 
   return template('submit_gamefile_confirm',fields)
   
@@ -133,11 +143,6 @@ def confirm_gamefile():
       backup = "%s.%s" % (dest_file,version)
     os.rename(dest_file,backup)
   os.rename(src_file,dest_file)
-
-  global wnap
-  wnap = nap.Nap()
-  wnap.load_games(gamefile_tree)
-  wnap.load_players()
 
   return template('success')
 
