@@ -146,6 +146,10 @@ def confirm_gamefile():
 
   return template('success')
 
+@get('/appnotes')
+def appnotes():
+  return template('appnotes')
+
 if __name__ == '__main__':
   bottle.run(host='0.0.0.0', port=8080, reloader=True)
 else:
