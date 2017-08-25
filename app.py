@@ -96,6 +96,7 @@ def submit_gamefile_result():
     fields['player_summary'] = upload_nap.summary_report()
   else:
     fields['club_info'] = ''
+    fields['player_summary'] = ''
 
   return template('submit_gamefile_confirm',fields)
   
