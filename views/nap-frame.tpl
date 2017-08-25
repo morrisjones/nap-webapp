@@ -33,6 +33,23 @@ body {
   margin: 0;
   border: 0;
 }
+table, th, td {
+  border: 1px solid black;
+}
+td {
+  padding: 3px;
+}
+table {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.odd td {
+  background-color: #ffd;
+}
+.even td {
+  background-color: #ddf;
+}
 </style>
 </head>
 <body>

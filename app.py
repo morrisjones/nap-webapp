@@ -32,24 +32,30 @@ def flta():
   gnap = Nap()
   gnap.load_games(gamefile_tree)
   gnap.load_players()
-  output = gnap.flight_report('a',True)
-  return template('report',title='Flight A Qualifiers',report=output)
+  flight_players = gnap.flight_players('a')
+  return template('flight_players',
+                  title='Flight A Qualifiers',
+                  flight_players=flight_players)
 
 @get('/fltb')
 def fltb():
   gnap = Nap()
   gnap.load_games(gamefile_tree)
   gnap.load_players()
-  output = gnap.flight_report('b',True)
-  return template('report',title='Flight B Qualifiers',report=output)
+  flight_players = gnap.flight_players('b')
+  return template('flight_players',
+                  title='Flight A Qualifiers',
+                  flight_players=flight_players)
 
 @get('/fltc')
 def fltc():
   gnap = Nap()
   gnap.load_games(gamefile_tree)
   gnap.load_players()
-  output = gnap.flight_report('c',True)
-  return template('report',title='Flight C Qualifiers',report=output)
+  flight_players = gnap.flight_players('c')
+  return template('flight_players',
+                  title='Flight A Qualifiers',
+                  flight_players=flight_players)
 
 @get('/favicon.ico')
 def favicon():

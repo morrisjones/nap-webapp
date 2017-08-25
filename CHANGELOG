@@ -1,3 +1,7 @@
+0.1.1
+
+* Redo the flight players report with some HTML formatting
+
 0.1.0
 
 * Start a CHANGELOG and implement a __version__ file
