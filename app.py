@@ -7,37 +7,46 @@ from nap.gamefile import GamefileException
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 gamefile_tree = os.environ['GAMEFILE_TREE']
 
-# This is a cache of the existing gamefiles
-wnap = nap.Nap()
-wnap.load_games(gamefile_tree)
-wnap.load_players()
-
 @get('/')
 def index():
   return template('home',home=True)
 
 @get('/clubgames')
 def clubs():
+  wnap = nap.Nap()
+  wnap.load_games(gamefile_tree)
   output = wnap.club_games()
   return template('report',title='Qualifier games reported',report=output)
 
 @get('/summary')
 def summary():
+  wnap = nap.Nap()
+  wnap.load_games(gamefile_tree)
+  wnap.load_players()
   output = wnap.summary_report()
   return template('report',title='Summary of all qualifiers',report=output)
 
 @get('/flta')
 def flta():
+  wnap = nap.Nap()
+  wnap.load_games(gamefile_tree)
+  wnap.load_players()
   output = wnap.flight_report('a',True)
   return template('report',title='Flight A Qualifiers',report=output)
 
 @get('/fltb')
 def fltb():
+  wnap = nap.Nap()
+  wnap.load_games(gamefile_tree)
+  wnap.load_players()
   output = wnap.flight_report('b',True)
   return template('report',title='Flight B Qualifiers',report=output)
 
 @get('/fltc')
 def fltc():
+  wnap = nap.Nap()
+  wnap.load_games(gamefile_tree)
+  wnap.load_players()
   output = wnap.flight_report('c',True)
   return template('report',title='Flight C Qualifiers',report=output)
 
@@ -76,12 +85,12 @@ def submit_gamefile_result():
   gf1_upload.save(gamefile_path)
 
   upload_nap = nap.Nap()
-  is_good = True
+  is_error = False
   try:
     upload_nap.load_game(gamefile_path)
     upload_nap.load_players()
   except GamefileException, e:
-    is_good = False
+    is_error = True
     error_msg = e.value
 
   fields = {}
@@ -90,13 +99,14 @@ def submit_gamefile_result():
   fields['gamefile_name'] = gamefile_filename
   fields['club_dir'] = club_dir
   fields['error_msg'] = error_msg
+  fields['is_error'] = is_error
 
-  if is_good:
-    fields['club_info'] = upload_nap.club_games()
-    fields['player_summary'] = upload_nap.summary_report()
-  else:
+  if is_error:
     fields['club_info'] = ''
     fields['player_summary'] = ''
+  else:
+    fields['club_info'] = upload_nap.club_games()
+    fields['player_summary'] = upload_nap.summary_report()
 
   return template('submit_gamefile_confirm',fields)
   
