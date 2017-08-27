@@ -46,10 +46,10 @@ table {
   margin-bottom: 10px;
 }
 .odd td {
-  background-color: #ffd;
+  background-color: #ffe;
 }
 .even td {
-  background-color: #ddf;
+  background-color: #eef;
 }
 </style>
 </head>
@@ -67,6 +67,10 @@ table {
     % end
   </div>
 {{!base}}
+% if not defined('home'):
+<p>&nbsp;</p>
+<p><a href="/">Return to home page</a></p>
+% end
 <div id="bottom" class="headfoot">
 <p>
 Hosted by <a href="http://bridgemojo.com">BridgeMojo</a><br/>
