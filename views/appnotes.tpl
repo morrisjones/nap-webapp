@@ -1,10 +1,14 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 <h1>Application Notes</h1>
-<h2>Updated 24 August 2017</h2>
+<h2>Updated 27 August 2017</h2>
+<p>Updates in version 0.2.0</p>
+<ul>
+<li>Added player search box, key on player number</li>
+<li>If you click on a club name in the club/game summary, you can see qualifiers from all games at that club</li>
+</ul>
 <p>Wishlist items, and todo list:</p>
 <ul>
-<li>Search box using player numbers or last name, first name, to find individual player information: games qualified in, or played in</li>
-<li>HTML formatting for the flight lists, and maybe the qualified player summary</li>
+<li>Bug: Clicking on a non-member player will return the wrong player information page</li>
 </ul>
 <p>Grateful acknowledgement to Matthew J. Kidd of lajollabridge.com for his ACBLgamedump perl scripts that parse ACBLscore
 game files into JSON data structures.</p>

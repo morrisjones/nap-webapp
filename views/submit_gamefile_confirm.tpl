@@ -26,6 +26,4 @@
 </pre>
 <p><a href="/submit_gamefile">Submit another</a></p>
 % end
-<p><a href="/">Return to home page</a></p>
 % end
-</p>

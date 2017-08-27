@@ -1,13 +1,20 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
-<h1>ACBL District 23 North American Pairs</h1>
-<h2>Playoff information here</h2>
-<p>&nbsp;</p>
+<h1>Playoff Qualifiers</h1>
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
-<h3><a href="/flta">Flight A with games</a></h3>
-<h3><a href="/fltb">Flight B with games</a></h3>
-<h3><a href="/fltc">Flight C with games</a></h3>
-<p>&nbsp;</p>
-<h3><a href="/submit_gamefile">Submit new game file</a></h3>
+<h3>Players by flight, with qualifying games:<br/>
+<a href="/flta">Flight A</a>
+<a href="/fltb">Flight B</a>
+<a href="/fltc">Flight C</a></h3>
+<h3>Result by individual club, game, or player</h3>
+<div style="margin-left: 20px;">
+<p>
+<form method="get" action="/findplayer">
+<label>Enter player number: <input name="pnum" size="8"/></label>
+<button>Submit</button>
+</form>
+</p>
+</div>
+<h3>Club managers and directors: <a href="/submit_gamefile">Submit new game file</a></h3>
 <p>&nbsp;</p>
 <p><a href="/appnotes">Application notes here</a></p>

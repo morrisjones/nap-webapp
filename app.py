@@ -6,7 +6,6 @@ from nap.gamefile import GamefileException
 from __version__ import __version__
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
-gamefile_tree = os.environ['GAMEFILE_TREE']
 
 @get('/')
 def index():
@@ -14,45 +13,70 @@ def index():
 
 @get('/clubgames')
 def clubs():
-  gnap = Nap()
-  gnap.load_games(gamefile_tree)
-  output = gnap.club_games()
-  return template('report',title='Qualifier games reported',report=output)
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  club_games = nap.club_games()
+  total_tables = 0.0
+  for g in club_games:
+    total_tables += g['tables']
+  fields = {
+    'title': "Qualifier games reported",
+    'club_games': club_games,
+    'total_games': len(club_games),
+    'total_tables': total_tables,
+    'flight_totals': None,
+    'players': None,
+  }
+  return template('clubgames', fields)
 
 @get('/summary')
 def summary():
-  gnap = Nap()
-  gnap.load_games(gamefile_tree)
-  gnap.load_players()
-  output = gnap.summary_report()
-  return template('report',title='Summary of all qualifiers',report=output)
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  total_players = len(nap.players)
+  flight_totals = nap.flight_totals()
+  players = []
+  for p in sorted(nap.players):
+    players.append({
+      'name': p.terse(),
+      'pnum': p.pnum,
+      'flta': ('Q' if p.is_qual('a') else ''),
+      'fltb': ('Q' if p.is_qual('b') else ''),
+      'fltc': ('Q' if p.is_qual('c') else ''),
+    })
+  return template('psummary',
+      title='Summary of all qualifiers',
+      players=players,
+      total_players=total_players,
+      flight_totals=flight_totals)
 
 @get('/flta')
 def flta():
-  gnap = Nap()
-  gnap.load_games(gamefile_tree)
-  gnap.load_players()
-  flight_players = gnap.flight_players('a')
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  flight_players = nap.flight_players('a')
   return template('flight_players',
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
 @get('/fltb')
 def fltb():
-  gnap = Nap()
-  gnap.load_games(gamefile_tree)
-  gnap.load_players()
-  flight_players = gnap.flight_players('b')
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  flight_players = nap.flight_players('b')
   return template('flight_players',
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
 @get('/fltc')
 def fltc():
-  gnap = Nap()
-  gnap.load_games(gamefile_tree)
-  gnap.load_players()
-  flight_players = gnap.flight_players('c')
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  flight_players = nap.flight_players('c')
   return template('flight_players',
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
@@ -103,9 +127,9 @@ def submit_gamefile_result():
 
   # Check to see if this game is already in the data set
   if not is_error:
-    gnap = Nap()
-    gnap.load_games(gamefile_tree)
-    all_games = gnap.games
+    nap = Nap()
+    nap.load_games(os.environ['GAMEFILE_TREE'])
+    all_games = nap.games
     if upload_game_key in all_games:
       is_error = True
       error_msg = "This game appears to be in the data set already."
@@ -157,8 +181,107 @@ def confirm_gamefile():
 def appnotes():
   return template('appnotes')
 
+@get('/findplayer')
+def findplayer():
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  pnum = request.query['pnum']
+  player = nap.find_player(pnum)
+  if player:
+    qualdates = nap.qualdates[player]
+    fields = {
+      'name': player.terse(),
+      'pnum': player.pnum,
+      'flta': ('A' if player.is_qual('a') else ''),
+      'fltb': ('B' if player.is_qual('b') else ''),
+      'fltc': ('C' if player.is_qual('c') else ''),
+      'qualdates': sorted(qualdates),
+      'error_msg': None,
+    }
+  else:
+    fields = {
+      'pnum': pnum,
+      'error_msg': "Player not found"
+    }
+    
+  return template('findplayer',fields)
+  
+@get('/findclub')
+def findclub():
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  club_num = request.query['club_num']
+  club_games = []
+  if club_num:
+    club_games = nap.club_games(club_number=club_num)
+  total_tables = 0.0
+  my_player_set = set()
+  for game in club_games:
+    total_tables += game['tables']
+    my_player_set.update(nap.players_from_game(game['game']))
+  flight_totals = nap.flight_totals(my_player_set)
+  players = []
+  for p in sorted(my_player_set):
+    players.append({
+      'name': p.terse(),
+      'pnum': p.pnum,
+      'flta': ('Q' if p.is_qual('a') else ''),
+      'fltb': ('Q' if p.is_qual('b') else ''),
+      'fltc': ('Q' if p.is_qual('c') else ''),
+    })
+  fields = {
+    'title': "Report for club %s" % club_games[0]['club_name'],
+    'club_games': club_games,
+    'total_games': len(club_games),
+    'total_tables': total_tables,
+    'flight_totals': flight_totals,
+    'players': players,
+    'total_players': len(players),
+  }
+  return template('clubgames',fields)
+
+@get('/findgame')
+def findgame():
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  game_index = request.query['game_index']
+  club_games = []
+  if game_index:
+    club_games = nap.club_games(game_index=int(game_index))
+  total_tables = 0.0
+  my_player_set = set()
+  for game in club_games:
+    total_tables += game['tables']
+    my_player_set.update(nap.players_from_game(game['game']))
+  flight_totals = nap.flight_totals(my_player_set)
+  players = []
+  for p in sorted(my_player_set):
+    players.append({
+      'name': p.terse(),
+      'pnum': p.pnum,
+      'flta': ('Q' if p.is_qual('a') else ''),
+      'fltb': ('Q' if p.is_qual('b') else ''),
+      'fltc': ('Q' if p.is_qual('c') else ''),
+    })
+  fields = {
+    'title': "Report for game %s" % str(int(game_index)+1),
+    'club_games': club_games,
+    'total_games': len(club_games),
+    'total_tables': total_tables,
+    'flight_totals': flight_totals,
+    'players': players,
+    'total_players': len(players),
+  }
+  return template('clubgames',fields)
+
+# end of the webapp
+
 if __name__ == '__main__':
   bottle.run(host='0.0.0.0', port=8080, reloader=True)
 else:
   app = application = bottle.default_app()
+
 
