@@ -143,7 +143,7 @@ def submit_gamefile_result():
   fields['is_error'] = is_error
 
   if not is_error:
-    fields['club_info'] = upload_nap.club_games()
+    fields['club_info'] = upload_nap.club_games_report()
     fields['player_summary'] = upload_nap.summary_report()
   else:
     fields['club_info'] = ''
