@@ -2,14 +2,33 @@ import bottle
 import sys, os, string, re
 from bottle import route, template, static_file, get, post, request, redirect
 from nap.nap import Nap
-from nap.gamefile import GamefileException
+from nap.gamefile import Gamefile, GamefileException, GFUtils
+from operator import itemgetter
 from __version__ import __version__
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 
 @get('/')
 def index():
-  return template('home',home=True)
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  clubs = nap.get_clubs()
+  club_list = []
+  for num in clubs:
+    club_list.append({
+      'num': num,
+      'name': clubs[num],
+    })
+  club_list = sorted(club_list, key=itemgetter('name'))
+  game_list = nap.get_game_list()
+  games = []
+  for g in game_list:
+    games.append({
+      'date': g.get_game_date(),
+      'session': GFUtils.SESSION_STRING[g.get_club_session_num()],
+      'name': g.get_club().name,
+    })
+  return template('home',home=True,clubs=club_list,games=games)
 
 @get('/clubgames')
 def clubs():
@@ -213,6 +232,8 @@ def findclub():
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
   club_num = request.query['club_num']
+  if club_num == '999':
+    redirect('/')
   club_games = []
   if club_num:
     club_games = nap.club_games(club_number=club_num)
@@ -248,6 +269,8 @@ def findgame():
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
   game_index = request.query['game_index']
+  if game_index == '999':
+    redirect('/')
   club_games = []
   if game_index:
     club_games = nap.club_games(game_index=int(game_index))

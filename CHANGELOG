@@ -1,3 +1,7 @@
+0.2.3
+
+* Support for memcached version of NAP, and select drop downs for clubs and games
+
 0.2.2
 
 * Pick up nap version 0.4.0 to provide support for CSV files from ACBLscore
