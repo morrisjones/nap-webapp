@@ -14,6 +14,30 @@
 <button>Submit</button>
 </form>
 </p>
+<p>
+<form method="get" action="/findclub">
+<label>Select a club:
+<select name="club_num" onchange="this.form.submit()">
+  <option value="999" selected>Choose a club:</option>
+% for club in clubs:
+  <option value="{{club['num']}}">{{club['name']}}</option>
+% end
+</select>
+</label>
+</form>
+</p>
+<p>
+<form method="get" action="/findgame">
+<label>Select an individual game:
+<select name="game_index" onchange="this.form.submit()"">
+  <option value="999" selected>Choose a game:</option>
+% for idx, g in enumerate(games):
+  <option value="{{idx}}">{{g['name']}} {{g['date']}} {{g['session']}}</option>
+% end
+</select>
+</label>
+</form>
+</p>
 </div>
 <h3>Club managers and directors: <a href="/submit_gamefile">Submit new game file</a></h3>
 <p>&nbsp;</p>
