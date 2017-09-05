@@ -1,11 +1,9 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 <h1>Playoff Qualifiers</h1>
+<h3><a href="/regform">Register here to play in a semi-final</a></h3>
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
-<h3>Players by flight, with qualifying games:<br/>
-<a href="/flta">Flight A</a>
-<a href="/fltb">Flight B</a>
-<a href="/fltc">Flight C</a></h3>
+
 <h3>Result by individual club, game, or player</h3>
 <div style="margin-left: 20px;">
 <p>

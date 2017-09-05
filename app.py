@@ -1,12 +1,12 @@
 import bottle
-import sys, os, string, re
-from bottle import route, template, static_file, get, post, request, redirect
+import os, string
+from bottle import template, static_file, get, post, request, redirect
 from nap.nap import Nap
-from nap.gamefile import Gamefile, GamefileException, GFUtils
+from nap.gamefile import GamefileException, GFUtils
 from operator import itemgetter
-from __version__ import __version__
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
+
 
 @get('/')
 def index():
@@ -30,6 +30,7 @@ def index():
     })
   return template('home',home=True,clubs=club_list,games=games)
 
+
 @get('/clubgames')
 def clubs():
   nap = Nap()
@@ -47,6 +48,7 @@ def clubs():
     'players': None,
   }
   return template('clubgames', fields)
+
 
 @get('/summary')
 def summary():
@@ -70,6 +72,7 @@ def summary():
       total_players=total_players,
       flight_totals=flight_totals)
 
+
 @get('/flta')
 def flta():
   nap = Nap()
@@ -79,6 +82,7 @@ def flta():
   return template('flight_players',
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
+
 
 @get('/fltb')
 def fltb():
@@ -90,6 +94,7 @@ def fltb():
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
+
 @get('/fltc')
 def fltc():
   nap = Nap()
@@ -100,13 +105,16 @@ def fltc():
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
+
 @get('/favicon.ico')
 def favicon():
   return static_file("favicon.ico", root="./static/img")
 
+
 @get('/submit_gamefile')
 def submit_gamefile_form():
   return template('submit_gamefile')
+
 
 @post('/submit_gamefile_confirm')
 def submit_gamefile_result():
@@ -169,7 +177,8 @@ def submit_gamefile_result():
     fields['player_summary'] = ''
 
   return template('submit_gamefile_confirm',fields)
-  
+
+
 @post('/confirm_gamefile')
 def confirm_gamefile():
   confirm = request.forms.get('confirm')
@@ -196,9 +205,11 @@ def confirm_gamefile():
 
   return template('success')
 
+
 @get('/appnotes')
 def appnotes():
   return template('appnotes')
+
 
 @get('/findplayer')
 def findplayer():
@@ -225,7 +236,8 @@ def findplayer():
     }
     
   return template('findplayer',fields)
-  
+
+
 @get('/findclub')
 def findclub():
   nap = Nap()
@@ -263,6 +275,7 @@ def findclub():
   }
   return template('clubgames',fields)
 
+
 @get('/findgame')
 def findgame():
   nap = Nap()
@@ -299,6 +312,53 @@ def findgame():
     'total_players': len(players),
   }
   return template('clubgames',fields)
+
+
+#
+# Here code for pre-registering for the Unit Final games
+#
+
+@get('/regform')
+def regform():
+  return template('regform')
+
+@post('/submit_regform')
+def submit_regform():
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+
+  fields = {}
+
+  fields['game'] = request.forms.get('game')
+  fields['flight'] = request.forms.get('flight')
+  fields['a_fname'] = request.forms.get('a_fname')
+  fields['a_lname'] = request.forms.get('a_lname')
+  fields['a_pnum'] = request.forms.get('a_pnum')
+  fields['b_fname'] = request.forms.get('b_fname')
+  fields['b_lname'] = request.forms.get('b_lname')
+  fields['b_pnum'] = request.forms.get('b_pnum')
+  fields['req_ns'] = request.forms.get('req_ns')
+
+  error_messages = []
+
+  player_a = nap.find_player(fields['a_pnum'])
+  if not player_a:
+    error_messages.append("Player %s %s %s not found in qualifier list" % \
+                          (fields['a_fname'],fields['a_lname'],fields['a_pnum']))
+  player_b = nap.find_player(fields['b_pnum'])
+  if not player_b:
+    error_messages.append("Player %s %s %s not found in qualifier list" % \
+                          (fields['b_fname'],fields['b_lname'],fields['b_pnum']))
+
+  if error_messages:
+    fields['error_messages'] = error_messages
+    return template('regform',fields)
+  return template('submit_regform')
+
+@get('/confirm_regform')
+def confirm_regform():
+  return template('confirm_regform')
 
 # end of the webapp
 

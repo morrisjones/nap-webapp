@@ -51,6 +51,10 @@ table {
 .even td {
   background-color: #eef;
 }
+.noborder {
+  border: none;
+  border-collapse: collapse;
+}
 </style>
 </head>
 <body>
