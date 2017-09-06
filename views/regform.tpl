@@ -1,3 +1,5 @@
+% # See here:
+% # https://stackoverflow.com/questions/29882361/show-datalist-labels-but-submit-the-actual-value
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 
 <h1>District 23 Semi-Final Games</h1>
@@ -18,6 +20,13 @@ good standing with ACBL.
 % end
 <h3><i>Please try again or contact <a href="mailto:mojo@whiteoaks.com">Mojo</a></i></h3>
 % end
+
+<datalist id="playerlist">
+% for pnum in players:
+  <option value="{{pnum}} | {{players[pnum]}}">{{players[pnum]}}</option>
+% end
+</datalist>
+
 <form method="POST" action="/submit_regform">
 <p><label><h3>Choose which game:<br/>
 <select name="game">
@@ -36,23 +45,11 @@ good standing with ACBL.
 </h3></label></p>
 <h3>Player 1:</h3>
 <p>
-<table class="noborder">
-<tr>
-<td class="noborder"><label>First name:<br/><input name="a_fname" value="{{get('a_fname','')}}"/><label></td>
-<td class="noborder"><label>Last name:<br/><input name="a_lname" value="{{get('a_lname','')}}"/><label></td>
-<td class="noborder"><label>ACBL Player No.:<br/><input name="a_pnum" value="{{get('a_pnum','')}}"/><label></td>
-</tr>
-</table>
+<input list="playerlist" name="player_a" size="50" placeholder="Last name, First name ...">
 </p>
 <h3>Player 2:</h3>
 <p>
-<table class="noborder">
-<tr>
-<td class="noborder"><label>First name:<br/><input name="b_fname" value="{{get('b_fname','')}}"/><label></td>
-<td class="noborder"><label>Last name:<br/><input name="b_lname" value="{{get('b_lname','')}}"/><label></td>
-<td class="noborder"><label>ACBL Player No.:<br/><input name="b_pnum" value="{{get('b_pnum','')}}"/><label></td>
-</tr>
-</table>
+<input list="playerlist" name="player_b" size="50" placeholder="Last name, First name ...">
 </p>
 <p>
 <label>

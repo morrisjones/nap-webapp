@@ -8,54 +8,8 @@ version = __version__
 <meta charset="UTF-8">
 <meta name=viewport content="width=500, initial-scale=0.8">
 <title>{{title}}</title>
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> 
-<style>
-body {
-  font-family: 'Lato', sans-serif;
-}
-.headfoot a:link {
-  color: #8ff
-}
-.headfoot a:visited {
-  color: #fff
-}
-.headfoot a:hover {
-  color: #0ff
-}
-.headfoot {
-  color: #ddd;
-  background-color: #008;
-  padding: 10px;
-  border: 0;
-  margin: 0;
-}
-#top h1, #top h2, #top h3 {
-  padding: 0;
-  margin: 0;
-  border: 0;
-}
-table, th, td {
-  border: 1px solid black;
-}
-td {
-  padding: 3px;
-}
-table {
-  border-collapse: collapse;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-.odd td {
-  background-color: #ffe;
-}
-.even td {
-  background-color: #eef;
-}
-.noborder {
-  border: none;
-  border-collapse: collapse;
-}
-</style>
+<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/nap-webapp.css">
 </head>
 <body>
 <div class="container">

@@ -1,5 +1,5 @@
 import bottle
-import os, string
+import os, string, re
 from bottle import template, static_file, get, post, request, redirect
 from nap.nap import Nap
 from nap.gamefile import GamefileException, GFUtils
@@ -7,6 +7,27 @@ from operator import itemgetter
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 
+#
+# This static file block will usually be preempted by NGINX before
+# reaching here, but when using the development server it's necessary
+#
+
+@get('<:re:.*/><filename:re:.*\.js>')
+def javascript(filename):
+  print "serving %s" % filename
+  return static_file(filename, root="static/js")
+
+@get('<:re:.*/><filename:re:.*\.(ico|png|jpg|gif)>')
+def icon(filename):
+  print "serving %s" % filename
+  return static_file(filename, root="static/img")
+
+@get('<:re:.*/><filename:re:.*\.css>')
+def css(filename):
+  print "serving %s" % filename
+  return static_file(filename, root="static/css")
+
+# --- End of static file service ---
 
 @get('/')
 def index():
@@ -105,16 +126,9 @@ def fltc():
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
-
-@get('/favicon.ico')
-def favicon():
-  return static_file("favicon.ico", root="./static/img")
-
-
 @get('/submit_gamefile')
 def submit_gamefile_form():
   return template('submit_gamefile')
-
 
 @post('/submit_gamefile_confirm')
 def submit_gamefile_result():
@@ -320,7 +334,14 @@ def findgame():
 
 @get('/regform')
 def regform():
-  return template('regform')
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  all_players = sorted(nap.players)
+  player_dict = {}
+  for p in all_players:
+    player_dict[p.pnum] = "%s, %s" % (p.lname, p.fname)
+  return template('regform',players=player_dict)
 
 @post('/submit_regform')
 def submit_regform():
@@ -332,29 +353,55 @@ def submit_regform():
 
   fields['game'] = request.forms.get('game')
   fields['flight'] = request.forms.get('flight')
-  fields['a_fname'] = request.forms.get('a_fname')
-  fields['a_lname'] = request.forms.get('a_lname')
-  fields['a_pnum'] = request.forms.get('a_pnum')
-  fields['b_fname'] = request.forms.get('b_fname')
-  fields['b_lname'] = request.forms.get('b_lname')
-  fields['b_pnum'] = request.forms.get('b_pnum')
+  fields['player_a'] = request.forms.get('player_a')
+  fields['player_b'] = request.forms.get('player_b')
   fields['req_ns'] = request.forms.get('req_ns')
 
   error_messages = []
 
-  player_a = nap.find_player(fields['a_pnum'])
-  if not player_a:
-    error_messages.append("Player %s %s %s not found in qualifier list" % \
-                          (fields['a_fname'],fields['a_lname'],fields['a_pnum']))
-  player_b = nap.find_player(fields['b_pnum'])
-  if not player_b:
-    error_messages.append("Player %s %s %s not found in qualifier list" % \
-                          (fields['b_fname'],fields['b_lname'],fields['b_pnum']))
+  getpnum = re.compile('^([^ ]*) \|.*$')
+  match = getpnum.match(fields['player_a'])
+  a_pnum = match.group(1)
+  match = getpnum.match(fields['player_b'])
+  b_pnum = match.group(1)
+
+  player_a = nap.find_player(a_pnum)
+  if player_a is None:
+    error_messages.append("Player not found: %s" % fields['player_a'])
+  elif nap.is_already_registered(a_pnum):
+    error_messages.append("Player already registered: %s" % fields['player_a'])
+
+  player_b = nap.find_player(b_pnum)
+  if player_b is None:
+    error_messages.append("Player not found: %s" % fields['player_b'])
+  elif nap.is_already_registered(b_pnum):
+    error_messages.append("Player already registered: %s" % fields['player_b'])
+
+  pr = nap.prereg[fields['game']][fields['flight']]
+  pr.add_entry(player_a,player_b,bool(fields['req_ns']))
+  nap.save_prereg(fields['game'],fields['flight'])
 
   if error_messages:
+    # TODO DRY up the repetition here with regform()
+    player_dict = {}
+    all_players = sorted(nap.players)
+    for p in all_players:
+      player_dict[p.pnum] = "%s, %s" % (p.lname, p.fname)
     fields['error_messages'] = error_messages
+    fields['players'] = player_dict
     return template('regform',fields)
-  return template('submit_regform')
+
+  # Here on the successful processing, send the current registrations to the template
+  reg = {}
+  for uf in ('UF1','UF2'):
+    reg[uf] = {}
+    for flight in ('a','b','c'):
+      reg[uf][flight] = {
+        'max_table': nap.prereg[uf][flight].find_max_table(),
+        'section': nap.prereg[uf][flight].get_section(),
+      }
+
+  return template('submit_regform',reg=reg)
 
 @get('/confirm_regform')
 def confirm_regform():
