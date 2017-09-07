@@ -1,19 +1,19 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 <h1>Playoff Qualifiers</h1>
-<h3><a href="/regform">Register here to play in a semi-final</a></h3>
+<h3><a href="/registration">Register here to play in a semi-final</a></h3>
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
 
 <h3>Result by individual club, game, or player</h3>
 <div style="margin-left: 20px;">
 <p>
-<form method="get" action="/findplayer">
+<form method="get" action="/find/player">
 <label>Enter player number: <input name="pnum" size="8"/></label>
 <button>Submit</button>
 </form>
 </p>
 <p>
-<form method="get" action="/findclub">
+<form method="get" action="/find/club">
 <label>Select a club:
 <select name="club_num" onchange="this.form.submit()">
   <option value="999" selected>Choose a club:</option>
@@ -25,7 +25,7 @@
 </form>
 </p>
 <p>
-<form method="get" action="/findgame">
+<form method="get" action="/find/game">
 <label>Select an individual game:
 <select name="game_index" onchange="this.form.submit()"">
   <option value="999" selected>Choose a game:</option>

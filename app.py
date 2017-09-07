@@ -1,35 +1,38 @@
+import os, string
+from registration import reg_app
+from find import find_app
 import bottle
-import os, string, re
-from bottle import template, static_file, get, post, request, redirect
+from bottle import Bottle, template, static_file, get, post, request, redirect
 from nap.nap import Nap
 from nap.gamefile import GamefileException, GFUtils
 from operator import itemgetter
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
+app = application = Bottle()
 
 #
 # This static file block will usually be preempted by NGINX before
 # reaching here, but when using the development server it's necessary
 #
 
-@get('<:re:.*/><filename:re:.*\.js>')
+@app.get('<:re:.*/><filename:re:.*\.js>')
 def javascript(filename):
   print "serving %s" % filename
   return static_file(filename, root="static/js")
 
-@get('<:re:.*/><filename:re:.*\.(ico|png|jpg|gif)>')
+@app.get('<:re:.*/><filename:re:.*\.(ico|png|jpg|gif)>')
 def icon(filename):
   print "serving %s" % filename
   return static_file(filename, root="static/img")
 
-@get('<:re:.*/><filename:re:.*\.css>')
+@app.get('<:re:.*/><filename:re:.*\.css>')
 def css(filename):
   print "serving %s" % filename
   return static_file(filename, root="static/css")
 
 # --- End of static file service ---
 
-@get('/')
+@app.get('/')
 def index():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -52,7 +55,7 @@ def index():
   return template('home',home=True,clubs=club_list,games=games)
 
 
-@get('/clubgames')
+@app.get('/clubgames')
 def clubs():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -71,7 +74,7 @@ def clubs():
   return template('clubgames', fields)
 
 
-@get('/summary')
+@app.get('/summary')
 def summary():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -94,7 +97,7 @@ def summary():
       flight_totals=flight_totals)
 
 
-@get('/flta')
+@app.get('/flta')
 def flta():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -105,7 +108,7 @@ def flta():
                   flight_players=flight_players)
 
 
-@get('/fltb')
+@app.get('/fltb')
 def fltb():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -126,11 +129,11 @@ def fltc():
                   title='Flight A Qualifiers',
                   flight_players=flight_players)
 
-@get('/submit_gamefile')
+@app.get('/submit_gamefile')
 def submit_gamefile_form():
   return template('submit_gamefile')
 
-@post('/submit_gamefile_confirm')
+@app.post('/submit_gamefile_confirm')
 def submit_gamefile_result():
 
   # First check for robots
@@ -193,7 +196,7 @@ def submit_gamefile_result():
   return template('submit_gamefile_confirm',fields)
 
 
-@post('/confirm_gamefile')
+@app.post('/confirm_gamefile')
 def confirm_gamefile():
   confirm = request.forms.get('confirm')
   gamefile_name = request.forms.get('gamefile_name')
@@ -220,198 +223,45 @@ def confirm_gamefile():
   return template('success')
 
 
-@get('/appnotes')
+@app.get('/appnotes')
 def appnotes():
   return template('appnotes')
 
+@app.get('/find<path:re:.*$>')
+def find_redirect(path):
+  redir = '/find/' + path
+  if request.query:
+    redir += '?'
+    queries = []
+    for param in request.query:
+      queries.append("%s=%s" % (param,request.query[param]))
+    redir += '&'.join(queries)
+  return redirect(redir)
 
-@get('/findplayer')
-def findplayer():
-  nap = Nap()
-  nap.load_games(os.environ['GAMEFILE_TREE'])
-  nap.load_players()
-  pnum = request.query['pnum']
-  player = nap.find_player(pnum)
-  if player:
-    qualdates = nap.qualdates[player]
-    fields = {
-      'name': player.terse(),
-      'pnum': player.pnum,
-      'flta': ('A' if player.is_qual('a') else ''),
-      'fltb': ('B' if player.is_qual('b') else ''),
-      'fltc': ('C' if player.is_qual('c') else ''),
-      'qualdates': sorted(qualdates),
-      'error_msg': None,
-    }
-  else:
-    fields = {
-      'pnum': pnum,
-      'error_msg': "Player not found"
-    }
-    
-  return template('findplayer',fields)
+@app.get('/find')
+def find_():
+  return redirect('/find/')
 
-
-@get('/findclub')
-def findclub():
-  nap = Nap()
-  nap.load_games(os.environ['GAMEFILE_TREE'])
-  nap.load_players()
-  club_num = request.query['club_num']
-  if club_num == '999':
-    redirect('/')
-  club_games = []
-  if club_num:
-    club_games = nap.club_games(club_number=club_num)
-  total_tables = 0.0
-  my_player_set = set()
-  for game in club_games:
-    total_tables += game['tables']
-    my_player_set.update(nap.players_from_game(game['game']))
-  flight_totals = nap.flight_totals(my_player_set)
-  players = []
-  for p in sorted(my_player_set):
-    players.append({
-      'name': p.terse(),
-      'pnum': p.pnum,
-      'flta': ('Q' if p.is_qual('a') else ''),
-      'fltb': ('Q' if p.is_qual('b') else ''),
-      'fltc': ('Q' if p.is_qual('c') else ''),
-    })
-  fields = {
-    'title': "Report for club %s" % club_games[0]['club_name'],
-    'club_games': club_games,
-    'total_games': len(club_games),
-    'total_tables': total_tables,
-    'flight_totals': flight_totals,
-    'players': players,
-    'total_players': len(players),
-  }
-  return template('clubgames',fields)
-
-
-@get('/findgame')
-def findgame():
-  nap = Nap()
-  nap.load_games(os.environ['GAMEFILE_TREE'])
-  nap.load_players()
-  game_index = request.query['game_index']
-  if game_index == '999':
-    redirect('/')
-  club_games = []
-  if game_index:
-    club_games = nap.club_games(game_index=int(game_index))
-  total_tables = 0.0
-  my_player_set = set()
-  for game in club_games:
-    total_tables += game['tables']
-    my_player_set.update(nap.players_from_game(game['game']))
-  flight_totals = nap.flight_totals(my_player_set)
-  players = []
-  for p in sorted(my_player_set):
-    players.append({
-      'name': p.terse(),
-      'pnum': p.pnum,
-      'flta': ('Q' if p.is_qual('a') else ''),
-      'fltb': ('Q' if p.is_qual('b') else ''),
-      'fltc': ('Q' if p.is_qual('c') else ''),
-    })
-  fields = {
-    'title': "Report for game %s" % str(int(game_index)+1),
-    'club_games': club_games,
-    'total_games': len(club_games),
-    'total_tables': total_tables,
-    'flight_totals': flight_totals,
-    'players': players,
-    'total_players': len(players),
-  }
-  return template('clubgames',fields)
+app.mount('/find/',find_app)
 
 
 #
 # Here code for pre-registering for the Unit Final games
 #
 
-@get('/regform')
-def regform():
-  nap = Nap()
-  nap.load_games(os.environ['GAMEFILE_TREE'])
-  nap.load_players()
-  all_players = sorted(nap.players)
-  player_dict = {}
-  for p in all_players:
-    player_dict[p.pnum] = "%s, %s" % (p.lname, p.fname)
-  return template('regform',players=player_dict)
+@app.get('/registration')
+def registration():
+  return redirect('/registration/')
 
-@post('/submit_regform')
-def submit_regform():
-  nap = Nap()
-  nap.load_games(os.environ['GAMEFILE_TREE'])
-  nap.load_players()
+app.mount('/registration/',reg_app)
 
-  fields = {}
-
-  fields['game'] = request.forms.get('game')
-  fields['flight'] = request.forms.get('flight')
-  fields['player_a'] = request.forms.get('player_a')
-  fields['player_b'] = request.forms.get('player_b')
-  fields['req_ns'] = request.forms.get('req_ns')
-
-  error_messages = []
-
-  getpnum = re.compile('^([^ ]*) \|.*$')
-  match = getpnum.match(fields['player_a'])
-  a_pnum = match.group(1)
-  match = getpnum.match(fields['player_b'])
-  b_pnum = match.group(1)
-
-  player_a = nap.find_player(a_pnum)
-  if player_a is None:
-    error_messages.append("Player not found: %s" % fields['player_a'])
-  elif nap.is_already_registered(a_pnum):
-    error_messages.append("Player already registered: %s" % fields['player_a'])
-
-  player_b = nap.find_player(b_pnum)
-  if player_b is None:
-    error_messages.append("Player not found: %s" % fields['player_b'])
-  elif nap.is_already_registered(b_pnum):
-    error_messages.append("Player already registered: %s" % fields['player_b'])
-
-  pr = nap.prereg[fields['game']][fields['flight']]
-  pr.add_entry(player_a,player_b,bool(fields['req_ns']))
-  nap.save_prereg(fields['game'],fields['flight'])
-
-  if error_messages:
-    # TODO DRY up the repetition here with regform()
-    player_dict = {}
-    all_players = sorted(nap.players)
-    for p in all_players:
-      player_dict[p.pnum] = "%s, %s" % (p.lname, p.fname)
-    fields['error_messages'] = error_messages
-    fields['players'] = player_dict
-    return template('regform',fields)
-
-  # Here on the successful processing, send the current registrations to the template
-  reg = {}
-  for uf in ('UF1','UF2'):
-    reg[uf] = {}
-    for flight in ('a','b','c'):
-      reg[uf][flight] = {
-        'max_table': nap.prereg[uf][flight].find_max_table(),
-        'section': nap.prereg[uf][flight].get_section(),
-      }
-
-  return template('submit_regform',reg=reg)
-
-@get('/confirm_regform')
-def confirm_regform():
-  return template('confirm_regform')
+@app.get('/regform<path:re:.*$>')
+def regform_redirect(path):
+  redirect('/registration' + path)
 
 # end of the webapp
 
 if __name__ == '__main__':
-  bottle.run(host='0.0.0.0', port=8080, reloader=True)
-else:
-  app = application = bottle.default_app()
+  bottle.run(app=app, host='0.0.0.0', port=8080, reloader=True)
 
 

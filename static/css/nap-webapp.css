@@ -25,7 +25,7 @@ body {
 table, th, td {
   border: 1px solid black;
 }
-td {
+td, th {
   padding: 3px;
 }
 table {
