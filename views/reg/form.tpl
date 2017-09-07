@@ -21,9 +21,9 @@ function fillPnum(e) {
     }
 };
 </script>
-<h1>District 23 Semi-Final Games</h1>
-<h2><a href="/registration/show">See current attendance</a></h2>
-<h2>Register to play<br/><span style="color: blue;">Test data only! Not yet live. Please proceed</span></h2>
+<h2>Register to play</h2>
+
+<p><span style="color: blue;">Test data only! Not yet live. Please proceed with abandon and report bugs.</p>
 
 <p>Select a semi-final game to play. All contestants must be members in
 good standing with ACBL.
@@ -47,7 +47,7 @@ good standing with ACBL.
 % end
 </datalist>
 
-<form method="POST" action="/registration/">
+<form method="POST" action="/registration/register">
 <p><label><h3 style="margin-bottom: 0;">Choose which game:</h3><br/>
 <select name="game">
 <option value="UF1" {{'selected' if game == 'UF1' else ''}}>South Bay Bridge Club, October 15, 10:00 a.m.</option>

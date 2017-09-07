@@ -33,6 +33,10 @@ def qual_players(nap):
       player_dict[p.pnum] = "%s, %s" % (p.lname, p.fname)
   return player_dict
 
+@reg_app.get('/')
+def home():
+  return template('reg/home')
+
 @reg_app.get('/show')
 def regshow():
   nap = Nap()
@@ -48,7 +52,7 @@ def regshow():
       }
   return template('reg/show',reg=reg)
 
-@reg_app.get('/')
+@reg_app.get('/register')
 def regform():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
@@ -73,7 +77,7 @@ def regform():
 
   return template('reg/form',fields)
 
-@reg_app.post('/')
+@reg_app.post('/register')
 def regsubmit():
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
