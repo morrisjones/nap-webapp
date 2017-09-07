@@ -90,7 +90,7 @@ def regsubmit():
 
   error_messages = []
 
-  if fields['human'] != 'bridge':
+  if not bool(re.match('bridge',fields['human'],re.IGNORECASE)):
     error_messages.append("Please type \"bridge\" in the \"Are you a robot?\" box.")
 
   if not fields['player_a']:
