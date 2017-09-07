@@ -1,5 +1,5 @@
 <table id="clubgames">
-<h2>Total players: {{total_players}}<br/>
+<h2>Total qualifiers: {{total_players}}<br/>
 Flight A: {{flight_totals['a']}}<br/>
 Flight B: {{flight_totals['b']}}<br/>
 Flight C: {{flight_totals['c']}}<br/>
