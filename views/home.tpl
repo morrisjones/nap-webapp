@@ -7,6 +7,10 @@
 <li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club</li>
 </ul>
 </div>
+<p><b>Registration for Unit Finals</b> goes live officially on Sept. 15. Until then,
+you can help test the registration system by reserving a seat at one of the games.
+<i>These will be wiped on Sept. 15, so no worries!</i></p>
+
 <h3><a href="/registration">Register here to play in a semi-final</a></h3>
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
