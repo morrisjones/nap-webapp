@@ -1,6 +1,6 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 % from nap.prereg import Seat
-<h2><a href="/registration/">Register for a semi-final game</a></h2>
+<h2><a href="/registration/register">Register for a semi-final game</a></h2>
 <h2 style="color: blue;">Test data only, not actual reservations</h2>
 % for uf in ('UF1','UF2'):
 % if uf == 'UF1':
