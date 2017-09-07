@@ -6,6 +6,7 @@ import hashlib
 from napemail import confirm_email
 from bottle import template, request, redirect
 from nap.nap import Nap
+import logging
 
 reg_app = bottle.Bottle()
 
@@ -149,6 +150,7 @@ def reg_confirm():
     fields['long_flight'] = 'C (Non-Life Master 0-500)'
 
   confirm_email(confirm_key,fields)
+  logging.info("New reservation sent for email confirmation: %s" % fields)
 
   return redirect('show')
 

@@ -6,9 +6,14 @@ from bottle import Bottle, template, static_file, get, post, request, redirect
 from nap.nap import Nap
 from nap.gamefile import GamefileException, GFUtils
 from operator import itemgetter
+import logging
 
 __cwd__ = os.path.dirname(os.path.realpath(__file__))
 app = application = Bottle()
+logging.basicConfig(filename=os.environ['LOG_FILE'],
+                    level=os.environ['LOG_LEVEL'],
+                    format='%(asctime)s %(message)s')
+logging.info('nap-webapp started')
 
 #
 # This static file block will usually be preempted by NGINX before
@@ -17,17 +22,17 @@ app = application = Bottle()
 
 @app.get('<:re:.*/><filename:re:.*\.js>')
 def javascript(filename):
-  print "serving %s" % filename
+  logging.debug("serving %s" % filename)
   return static_file(filename, root="static/js")
 
 @app.get('<:re:.*/><filename:re:.*\.(ico|png|jpg|gif)>')
 def icon(filename):
-  print "serving %s" % filename
+  logging.debug("serving %s" % filename)
   return static_file(filename, root="static/img")
 
 @app.get('<:re:.*/><filename:re:.*\.css>')
 def css(filename):
-  print "serving %s" % filename
+  logging.debug("serving %s" % filename)
   return static_file(filename, root="static/css")
 
 # --- End of static file service ---
@@ -219,6 +224,8 @@ def confirm_gamefile():
       backup = "%s.%s" % (dest_file,version)
     os.rename(dest_file,backup)
   os.rename(src_file,dest_file)
+
+  logging.info('New gamefile uploaded club: %s file: %s' % (club_dir,gamefile_name))
 
   return template('success')
 
