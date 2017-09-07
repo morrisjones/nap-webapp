@@ -43,3 +43,35 @@ table {
   border: none;
   border-collapse: collapse;
 }
+.button {
+    background-color: #008;
+    color: #ddd;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10 px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.small-btn {
+    width: 50px;
+    height: 25px;
+}
+.medium-btn {
+    font-size: 125%;
+    width: 170px;
+    height: 60px;
+}
+.large-btn {
+    font-size: 125%;
+    width: 200px;
+    height: 70px;
+}
+label {
+    font-size: 100%;
+}
+input {
+    font-size: 100%;
+}
+select {
+    font-size: 100%;
+}

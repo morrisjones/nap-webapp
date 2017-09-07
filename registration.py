@@ -3,9 +3,10 @@ import os
 import re
 import json
 import hashlib
-from napemail import confirm_email
+from napemail import confirm_email, send_congrats_email
 from bottle import template, request, redirect
 from nap.nap import Nap
+from nap.gamefile import Player
 import logging
 
 reg_app = bottle.Bottle()
@@ -13,6 +14,15 @@ reg_app = bottle.Bottle()
 valid_pnum = re.compile('^[0-9J-R]\d\d\d\d\d\d')
 reg_form_keys = ('game', 'flight', 'player_a', 'pnum_a', 'player_b', 'pnum_b',
          'req_ns', 'email', 'human', 'confirm',)
+game_desc = {
+  'UF1': "Sunday, October 15, 10:00 a.m., South Bay Bridge Club",
+  'UF2': "Sunday, November 5, 10:00 a.m., Long Beach Bridge Club",
+}
+flight_desc = {
+  'a': "A (Open)",
+  'b': "B (0-2500)",
+  'c': "C (Non-Life Master 0-500)",
+}
 
 def qual_players(nap):
   """Build a sorted list of players who appear to have valid ACBL numbers"""
@@ -94,6 +104,8 @@ def regsubmit():
     error_messages.append("Missing player 2")
   elif not bool(valid_pnum.match(fields['pnum_b'])):
     error_messages.append("Player 2 appears to have an invalid ACBL number")
+  elif fields['pnum_a'] == fields['pnum_b']:
+    error_messages.append("Need two different players (not the same)")
   else:
     player_b = nap.find_player(fields['pnum_b'])
     if player_b is None:
@@ -108,11 +120,6 @@ def regsubmit():
     fields['error_messages'] = error_messages
     fields['players'] = qual_players(nap)
     return template('reg/form',fields)
-
-  # else:
-  #   pr = nap.prereg[fields['game']][fields['flight']]
-  #   pr.add_entry(player_a,player_b,bool(fields['req_ns']))
-  #   nap.save_prereg(fields['game'],fields['flight'])
 
   return template('reg/confirm',fields)
 
@@ -138,22 +145,73 @@ def reg_confirm():
   with open(confirm_file,'w') as f:
     f.write(reg_form_json)
 
-  if fields['game'] == 'UF1':
-    fields['long_game'] = "October 15, 10:00 a.m., South Bay Bridge Club"
-  elif fields['game'] == 'UF2':
-    fields['long_game'] = "November 5, 10:00 a.m., Long Beach Bridge Club"
-  if fields['flight'] == 'a':
-    fields['long_flight'] = 'A (Open)'
-  if fields['flight'] == 'b':
-    fields['long_flight'] = 'B (0-2500)'
-  if fields['flight'] == 'c':
-    fields['long_flight'] = 'C (Non-Life Master 0-500)'
+  fields['game_desc'] = game_desc[fields['game']]
+  fields['flight_desc'] = flight_desc[fields['flight']]
+
+  fields['scheme'], fields['host'] = list(request.urlparts)[:2]
 
   confirm_email(confirm_key,fields)
   logging.info("New reservation sent for email confirmation: %s" % fields)
 
-  return redirect('show')
+  return template('reg/email_sent')
 
 @reg_app.get('/confirm')
 def reg_confirm_email():
-  return template('email_confirm')
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+
+  confirm_key = request.query.get('key')
+  confirm_file = os.path.join(os.environ['UNIT_REGISTRATION'],confirm_key)
+
+  error_messages = []
+
+  if not os.path.isfile(confirm_file):
+    error_messages.append("Something went wrong, reservation not found")
+    return template('reg/email_confirm',error_messages=error_messages)
+
+  with open(confirm_file,"r") as f:
+    reg = json.load(f)
+  logging.info("Registration confirmed: %s" % reg)
+  if reg['req_ns'] == "on":
+    reg['req_ns'] = True
+  else:
+    reg['req_ns'] = False
+
+  # Check that players are still not already registered
+  if reg.get('confirmed') == 'success':
+    error_messages.append("This registration has already been confirmed, thank you!")
+  if nap.is_already_registered(reg['pnum_a']):
+    error_messages.append("Player %s is already registered" % reg['player_a'])
+  if nap.is_already_registered(reg['pnum_b']):
+    error_messages.append("Player %s is already registered" % reg['player_b'])
+
+  if error_messages:
+    logging.info("Errors: %s" % error_messages)
+    return template('reg/email_confirm',error_messages=error_messages)
+
+  player_a = nap.find_player(reg['pnum_a'])
+  if not player_a:
+    error_messages.append("Player %s not found in the qualifiers" % reg['player_a'])
+  player_b = nap.find_player(reg['pnum_b'])
+  if not player_b:
+    error_messages.append("Player %s not found in the qualifiers" % reg['player_b'])
+
+  if not error_messages:
+    pr = nap.prereg[reg['game']][reg['flight']]
+    seat = pr.add_entry(player_a,player_b,reg['req_ns'])
+    nap.save_prereg(reg['game'],reg['flight'])
+    reg['confirmed'] = "success"
+    reg['table_number'] = seat.table
+    reg['direction'] = seat.direction
+    reg['game_desc'] = game_desc[reg['game']]
+    reg['flight_desc'] = flight_desc[reg['flight']]
+    logging.info("Registration: %s", reg)
+    with open(confirm_file,"w") as f:
+      json.dump(reg,f)
+
+  reg['error_messages'] = error_messages
+
+  send_congrats_email(reg)
+
+  return template('reg/email_confirm',**reg)

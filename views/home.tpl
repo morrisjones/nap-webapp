@@ -1,10 +1,17 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 <h1>Playoff Qualifiers</h1>
+<div style="margin-left: 20px;">
+<p><b>Unit Final (District Semi-Final) Game Schedule:</b></p>
+<ul>
+<li>Sunday, October 15, 10:00 a.m., South Bay Bridge Club</li>
+<li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club</li>
+</ul>
+</div>
 <h3><a href="/registration">Register here to play in a semi-final</a></h3>
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
 
-<h3>Result by individual club, game, or player</h3>
+<h3>Qualifiers by individual club, game, or player</h3>
 <div style="margin-left: 20px;">
 <p>
 <form method="get" action="/find/player">

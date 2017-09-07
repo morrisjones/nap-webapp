@@ -23,7 +23,7 @@ function fillPnum(e) {
 </script>
 <h1>District 23 Semi-Final Games</h1>
 <h2><a href="/registration/show">See current attendance</a></h2>
-<h2>Register to play</h2>
+<h2>Register to play<br/><span style="color: blue;">Test data only! Not yet live. Please proceed</span></h2>
 
 <p>Select a semi-final game to play. All contestants must be members in
 good standing with ACBL.
@@ -40,7 +40,7 @@ good standing with ACBL.
 % end
 <h3><i>Please try again or <a href="mailto:nap@bridgemojo.com">contact Mojo for help</a></i></h3>
 % end
-<p>Players available: {{len(players.keys())}}</p>
+<p>Players qualified: {{len(players.keys())}}</p>
 <datalist id="playerlist">
 % for pnum in players:
   <option data-value="{{pnum}}">{{players[pnum]}}</option>
@@ -48,14 +48,14 @@ good standing with ACBL.
 </datalist>
 
 <form method="POST" action="/registration/">
-<p><label><h3>Choose which game:<br/>
+<p><label><h3 style="margin-bottom: 0;">Choose which game:</h3><br/>
 <select name="game">
 <option value="UF1" {{'selected' if game == 'UF1' else ''}}>South Bay Bridge Club, October 15, 10:00 a.m.</option>
 <option value="UF2" {{'selected' if game == 'UF2' else ''}}>Long Beach Bridge Club, November 5, 10:00 a.m.</option>
 </select>
 </h3></label>
 </p>
-<p><label><h3>Choose flight:<br/>
+<p><label><h3 style="margin-bottom: 0;">Choose flight:</h3><br/>
 <select name="flight">
 % flight = get('flight', 'a')
 <option value="a" {{'selected' if flight == 'a' else ''}}>Flight A (Open)</option>
@@ -74,8 +74,8 @@ good standing with ACBL.
 <input value="{{pnum_b}}" type="hidden" name="pnum_b" id="plrb-hidden">
 </p>
 <h3>Confirmation Email Address</h3>
-<p>
-<input value="{{email}}"" type="email" name="email" placeholder="Email address...">
+<p><label>This email address will be the contact point for the partnership:<br/>
+<input size="40" value="{{email}}"" type="email" name="email" placeholder="Email address..."></label>
 </p>
 <p>
 <label>
@@ -89,5 +89,5 @@ Check here you require a N/S seat for both sessions.
 <input type="text" name="human">
 </label>
 </p>
-<p><button>Submit request</button></p>
+<p><button class="button large-btn">Submit request</button></p>
 </form>

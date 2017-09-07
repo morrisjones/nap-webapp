@@ -28,7 +28,7 @@ end
 <tr><td><b>Confirmation email</b></td><td>{{email}}</td></tr>
 </table>
 
-<form method="post" action="confirm">
+<form method="post" action="/registration/confirm">
 <input type="hidden" name="game" value="{{game}}">
 <input type="hidden" name="flight" value="{{flight}}">
 <input type="hidden" name="player_a" value="{{player_a}}">
@@ -44,5 +44,5 @@ end
 <input name="confirm" type="radio" value="yes" checked/>Yes<br/>
 <input name="confirm" type="radio" value="no"/>No, discard this reservation<br/>
 </p>
-<p><button>Submit</button></p>
+<p><button class="button medium-btn">Yes, please</button></p>
 </form>
