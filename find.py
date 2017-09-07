@@ -1,5 +1,6 @@
 import os
 import bottle
+import logging
 from bottle import template, request, redirect
 from nap.nap import Nap
 
@@ -7,11 +8,13 @@ find_app = bottle.Bottle()
 
 @find_app.route('/')
 def find_home():
+  logging.warning("serving /find/ home, useless template")
   return template('findhome')
 
 
 @find_app.get('/player')
 def findplayer():
+  logging.debug("begin /find/player")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
@@ -34,10 +37,13 @@ def findplayer():
       'error_msg': "Player not found"
     }
 
+  logging.info("find result for player %s" % pnum)
+  logging.debug("end /find/player")
   return template('find/player', fields)
 
 @find_app.get('/club')
 def findclub():
+  logging.debug("begin /find/club")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
@@ -71,10 +77,13 @@ def findclub():
     'players': players,
     'total_players': len(players),
   }
+  logging.info("find result for club %s" % club_num)
+  logging.debug("end /find/clubgame")
   return template('find/clubgame',fields)
 
 @find_app.get('/game')
 def findgame():
+  logging.debug("begin /find/game")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
@@ -108,6 +117,8 @@ def findgame():
     'players': players,
     'total_players': len(players),
   }
+  logging.info("find result for game %s" % game_index)
+  logging.debug("end /find/game")
   return template('find/clubgame',fields)
 
 

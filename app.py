@@ -12,7 +12,7 @@ __cwd__ = os.path.dirname(os.path.realpath(__file__))
 app = application = Bottle()
 logging.basicConfig(filename=os.environ['LOG_FILE'],
                     level=os.environ['LOG_LEVEL'],
-                    format='%(asctime)s %(message)s')
+                    format='%(asctime)s %(levelname)s %(message)s')
 logging.info('nap-webapp started')
 
 #
@@ -39,6 +39,7 @@ def css(filename):
 
 @app.get('/')
 def index():
+  logging.debug("begin /")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   clubs = nap.get_clubs()
@@ -57,11 +58,13 @@ def index():
       'session': GFUtils.SESSION_STRING[g.get_club_session_num()],
       'name': g.get_club().name,
     })
+  logging.debug("end /")
   return template('home',home=True,clubs=club_list,games=games)
 
 
 @app.get('/clubgames')
 def clubs():
+  logging.debug("begin /clubgames")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   club_games = nap.club_games()
@@ -76,11 +79,13 @@ def clubs():
     'flight_totals': None,
     'players': None,
   }
+  logging.debug("end /clubgames")
   return template('clubgames', fields)
 
 
 @app.get('/summary')
 def summary():
+  logging.debug("begin /summary")
   nap = Nap()
   nap.load_games(os.environ['GAMEFILE_TREE'])
   nap.load_players()
@@ -95,6 +100,7 @@ def summary():
       'fltb': ('Q' if p.is_qual('b') else ''),
       'fltc': ('Q' if p.is_qual('c') else ''),
     })
+  logging.debug("end /summary")
   return template('psummary',
       title='Summary of all qualifiers',
       players=players,
@@ -136,11 +142,12 @@ def fltc():
 
 @app.get('/submit_gamefile')
 def submit_gamefile_form():
+  logging.debug("end /submit_gamefile")
   return template('submit_gamefile')
 
 @app.post('/submit_gamefile_confirm')
 def submit_gamefile_result():
-
+  logging.debug("start post /submit_gamefile_confirm")
   # First check for robots
   if request.forms.get('testfield') != 'bridge':
     return template('no_robots')
@@ -198,11 +205,15 @@ def submit_gamefile_result():
     fields['club_info'] = ''
     fields['player_summary'] = ''
 
+  if is_error:
+    logging.warning("Returning error message on gamefile submission %s" % error_msg)
+  logging.debug("end /submit_gamefile_confirm")
   return template('submit_gamefile_confirm',fields)
 
 
 @app.post('/confirm_gamefile')
 def confirm_gamefile():
+  logging.debug("begin post /confirm_gamefile")
   confirm = request.forms.get('confirm')
   gamefile_name = request.forms.get('gamefile_name')
   club_dir = request.forms.get('club_dir')
@@ -226,16 +237,18 @@ def confirm_gamefile():
   os.rename(src_file,dest_file)
 
   logging.info('New gamefile uploaded club: %s file: %s' % (club_dir,gamefile_name))
-
+  logging.debug("end post /confirm_gamefile")
   return template('success')
 
 
 @app.get('/appnotes')
 def appnotes():
+  logging.debug("visit /appnotes")
   return template('appnotes')
 
 @app.get('/find<path:re:.*$>')
 def find_redirect(path):
+  logging.warning("Old /find URL used and redirected")
   redir = '/find/' + path
   if request.query:
     redir += '?'

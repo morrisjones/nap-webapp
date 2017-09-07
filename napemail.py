@@ -1,4 +1,5 @@
 import os
+import logging
 from smtplib import SMTP
 
 #
@@ -38,6 +39,7 @@ def confirm_email(confirm_key,fields):
   smtp.login(mailuser,mailpass)
   smtp.sendmail(email_from,email_to,body)
 
+  logging.info("confirm email send to %s" % email_to)
   return
 
 congrats_email = """From: D23 North American Pairs <nap@bridgemojo.com>
@@ -72,4 +74,5 @@ def send_congrats_email(fields):
   smtp.login(mailuser,mailpass)
   smtp.sendmail(email_from,email_to,body)
 
+  logging.info("congrats email send to %s" % email_to)
   return
