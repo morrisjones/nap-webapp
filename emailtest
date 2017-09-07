@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import os
+from smtplib import SMTP
+
+mailhost = "mail.rs.whiteoaks.com"
+mailuser = os.environ['MAIL_USER']
+mailpassword = os.environ['MAIL_PASSWORD']
+
+smtp = SMTP(mailhost)
+smtp.set_debuglevel(True)
+smtp.starttls()
+smtp.login(mailuser,mailpassword)
+
+mailfrom = "nap@bridgemojo.com"
+mailto = ["mojo.la@gmail.com"]
+message = """From: D23 North American Pairs <nap@bridgemojo.com>
+To: mojo.la@gmail.com
+Subject: Confirming NAP registration
+
+Please click this link to confirm registration in the North American Pairs semi-final game:
+
+https://nap.bridgemojo.com/appnotes
+
+Best regards,
+Morris "Mojo" Jones
+NAP Coordinator, District 23
+"""
+smtp.sendmail(mailfrom,mailto,message)
+
+smtp.quit()

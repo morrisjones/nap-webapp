@@ -15,8 +15,8 @@ Flight C: {{flight_totals['c']}}<br/>
 % bgclass = ("odd" if ((row % 2) == 1) else "even")
 % # bgclass="table_row"
 <tr class="{{bgclass}}">
-  <td><a href="/findplayer?pnum={{player['pnum']}}">{{player['name']}}</a></td>
-  <td><a href="/findplayer?pnum={{player['pnum']}}">{{player['pnum']}}</a></td>
+  <td><a href="/find/player?pnum={{player['pnum']}}">{{player['name']}}</a></td>
+  <td><a href="/find/player?pnum={{player['pnum']}}">{{player['pnum']}}</a></td>
   <td style="text-align: center;">{{player['flta']}}</td>
   <td style="text-align: center;">{{player['fltb']}}</td>
   <td style="text-align: center;">{{player['fltc']}}</td>

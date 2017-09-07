@@ -1,0 +1,77 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+.headfoot a:link {
+  color: #8ff
+}
+.headfoot a:visited {
+  color: #fff
+}
+.headfoot a:hover {
+  color: #0ff
+}
+.headfoot {
+  color: #ddd;
+  background-color: #008;
+  padding: 10px;
+  border: 0;
+  margin: 0;
+}
+#top h1, #top h2, #top h3 {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+table, th, td {
+  border: 1px solid black;
+}
+td, th {
+  padding: 3px;
+}
+table {
+  border-collapse: collapse;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.odd td {
+  background-color: #ffe;
+}
+.even td {
+  background-color: #eef;
+}
+.noborder {
+  border: none;
+  border-collapse: collapse;
+}
+.button {
+    background-color: #008;
+    color: #ddd;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10 px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.small-btn {
+    width: 50px;
+    height: 25px;
+}
+.medium-btn {
+    font-size: 125%;
+    width: 170px;
+    height: 60px;
+}
+.large-btn {
+    font-size: 125%;
+    width: 200px;
+    height: 70px;
+}
+label {
+    font-size: 100%;
+}
+input {
+    font-size: 100%;
+}
+select {
+    font-size: 100%;
+}
