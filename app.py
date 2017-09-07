@@ -1,4 +1,4 @@
-import os, string
+import os, string, re
 from registration import reg_app
 from find import find_app
 import bottle
@@ -149,7 +149,7 @@ def submit_gamefile_form():
 def submit_gamefile_result():
   logging.debug("start post /submit_gamefile_confirm")
   # First check for robots
-  if request.forms.get('testfield') != 'bridge':
+  if not bool(re.match('bridge',request.forms.get('testfield'),re.IGNORECASE)):
     return template('no_robots')
 
   # Use the clubname to make a subdirectory for the gamefile
