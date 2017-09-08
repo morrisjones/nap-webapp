@@ -14,12 +14,12 @@ Total tables: {{total_tables}}</h2>
 <tr class="{{bgclass}}">
   <td>{{cg['club_number']}}</td>
   <td>
-  <a href="/findclub?club_num={{cg['club_number']}}">
+  <a href="/find/club?club_num={{cg['club_number']}}">
   {{cg['club_name']}}
   </a>
   </td>
   <td>
-    <a href="findgame?game_index={{cg['game_index']}}">
+    <a href="find/game?game_index={{cg['game_index']}}">
     {{cg['game_date']}}
     </a>
   </td>
