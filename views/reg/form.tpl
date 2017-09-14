@@ -23,8 +23,6 @@ function fillPnum(e) {
 </script>
 <h2>Register to play</h2>
 
-<p><span style="color: blue;">Test data only! Not yet live. Please proceed with abandon and report bugs.</p>
-
 <p>Select a semi-final game to play. All contestants must be members in
 good standing with ACBL.
 </p>
