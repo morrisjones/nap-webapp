@@ -23,12 +23,18 @@ function fillPnum(e) {
 </script>
 <h2>Register to play</h2>
 
-<p>Select a semi-final game to play. All contestants must be members in
-good standing with ACBL.
-</p>
+<h3>Eligibility Notes</h3>
 
-<p><b>Note:</b> <i>You may only play in one semi-final (Unit Final) game.</i>
-</p>
+<ul>
+<li>All players must be ACBL members in good standing before the start of the Unit Final.</li>
+<li>Players may only enter one unit final for a given flight. (For example: You may 
+enter Flight A in the first game, and Flight B in the second, but may not play
+in the same flight in both unit finals.)</li>
+<li>Eligibility is based on recorded masterpoints as of June 1.</li>
+<li>See the full <a href="http://www.bridgewebs.com//acbl23/201718NAPCOC.pdf">Conditions of Contest</a>
+at this link</li>
+</ul>
+
 
 % if defined('error_messages'):
 % for msg in error_messages:
@@ -36,7 +42,7 @@ good standing with ACBL.
 {{msg}}
 </h3>
 % end
-<h3><i>Please try again or <a href="mailto:nap@bridgemojo.com">contact Mojo for help</a></i></h3>
+<h3><i>Please try again or <a href="mailto:nap@bridgemojo.com">email for help</a></i></h3>
 % end
 <p>Players qualified: {{len(players.keys())}}</p>
 <datalist id="playerlist">
