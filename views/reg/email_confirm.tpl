@@ -18,4 +18,6 @@
 </table>
 % end
 <h3><a href="/registration/show">Click here to see current reservations</a></h3>
-
+<p><b>If your plans change</b>, please send an email to <a href="mailto:nap@bridgemojo.com">me, 
+Mojo, the district NAP coordinator</a> and I'll be happy to revise or cancel your
+reservation.</p>

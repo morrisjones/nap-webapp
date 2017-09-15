@@ -56,6 +56,9 @@ Your provisional table assignment for the first session is {table_number} {direc
 
 Please arrive early at the game site with $48 for the session ($12/player per session).
 
+If your plans change, please drop me a note! I'll be happy to change your reservation.
+Reply to this message, or write to nap@bridgemojo.com.
+
 Best regards,
 District 23 North American Pairs
 https://nap.bridgemojo.com
