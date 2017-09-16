@@ -201,16 +201,17 @@ def reg_confirm_email():
   # Check that players are still not already registered
   if reg.get('confirmed') == 'success':
     error_messages.append("This registration has already been confirmed, thank you!")
-  if nap.is_already_in_flight(reg['pnum_a'],reg['flight']):
-    error_messages.append("Player %s is already registered in flight %s" % \
-                          (flight_desc(reg['flight']),reg['player_a']))
-  if nap.is_already_in_game(reg['pnum_a'],reg['game']):
-    error_messages.append("Player %s is already in game %s" % (reg['pnum_a'],reg['game']))
-  if nap.is_already_in_flight(reg['pnum_b'],reg['flight']):
-    error_messages.append("Player %s is already registered in flight %s" % \
-                          (flight_desc(reg['flight']),reg['player_a']))
-  if nap.is_already_in_game(reg['pnum_a'],reg['game']):
-    error_messages.append("Player %s is already in game %s" % (reg['pnum_a'],reg['game']))
+  else:
+    if nap.is_already_in_flight(reg['pnum_a'],reg['flight']):
+      error_messages.append("Player %s is already registered in flight %s" % \
+                            (reg['player_a'],flight_desc[reg['flight']]))
+    if nap.is_already_in_game(reg['pnum_a'],reg['game']):
+      error_messages.append("Player %s is already in game %s" % (reg['pnum_a'],reg['game']))
+    if nap.is_already_in_flight(reg['pnum_b'],reg['flight']):
+      error_messages.append("Player %s is already registered in flight %s" % \
+                            (reg['player_b'],flight_desc[reg['flight']]))
+    if nap.is_already_in_game(reg['pnum_a'],reg['game']):
+      error_messages.append("Player %s is already in game %s" % (reg['pnum_a'],reg['game']))
 
   if error_messages:
     logging.info("Errors: %s" % error_messages)
