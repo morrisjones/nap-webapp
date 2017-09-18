@@ -235,7 +235,7 @@ def reg_confirm_email():
     reg['flight_desc'] = flight_desc[reg['flight']]
     logging.info("Registration: %s", reg)
     with open(confirm_file,"w") as f:
-      json.dump(reg,f)
+      json.dump(reg, f, sort_keys=True, indent=4, separators=(',',': '))
 
   reg['error_messages'] = error_messages
 
