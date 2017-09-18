@@ -6,6 +6,10 @@
 <li>Sunday, October 15, 10:00 a.m., South Bay Bridge Club</li>
 <li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club</li>
 </ul>
+<p><b>District Final</b></p>
+<ul>
+<li>Sunday, January 14, 10:00 a.m., San Marino Bridge Club, 1800 Huntington Drive</li>
+</ul>
 </div>
 
 <h3><a href="/registration">Register here to play in a semi-final</a></h3>
@@ -48,5 +52,6 @@
 <!--
 <h3>Club managers and directors: <a href="/submit_gamefile">Submit new game file</a></h3>
 -->
+<h3><a href="/unit-final-flier.pdf">Click here for the Unit Final flier PDF</a></h3>
 <p>&nbsp;</p>
 <p><a href="/appnotes">Application notes here</a></p>
