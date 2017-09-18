@@ -102,7 +102,7 @@ def regsubmit():
   if not fields['player_a']:
     error_messages.append("Missing player 1")
   elif not bool(valid_pnum.match(fields['pnum_a'])):
-    error_messages.append("Player 1 appears to have an invalid ACBL number")
+    error_messages.append("Player '%s' isn't found among qualifiers, spelled differently perhaps?" % fields['player_a'])
   else:
     player_a = nap.find_player(fields['pnum_a'])
     if player_a is None:
@@ -116,7 +116,7 @@ def regsubmit():
   if not fields['player_b']:
     error_messages.append("Missing player 2")
   elif not bool(valid_pnum.match(fields['pnum_b'])):
-    error_messages.append("Player 2 appears to have an invalid ACBL number")
+    error_messages.append("Player '%s' isn't found among qualifiers, spelled differently perhaps?" % fields['player_b'])
   elif fields['pnum_a'] == fields['pnum_b']:
     error_messages.append("Need two different players (not the same)")
   else:
