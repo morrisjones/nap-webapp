@@ -133,9 +133,10 @@ def regsubmit():
     error_messages.append("Confirmation email address is required")
 
   if error_messages:
+    logging.warning("post /registration/register error messages %s",error_messages)
+    logging.warning("Attempted registration fields: %s",fields)
     fields['error_messages'] = error_messages
     fields['players'] = qual_players(nap)
-    logging.warning("post /registration/register error messages %s",error_messages)
     return template('reg/form',fields)
 
   logging.debug("end post /registration/register")
@@ -214,7 +215,8 @@ def reg_confirm_email():
       error_messages.append("Player %s is already in game %s" % (reg['pnum_a'],reg['game']))
 
   if error_messages:
-    logging.info("Errors: %s" % error_messages)
+    logging.warning("Errors: %s" % error_messages)
+    logging.warning("Attempted email confirm, reg: %s", reg)
     return template('reg/email_confirm',error_messages=error_messages)
 
   player_a = nap.find_player(reg['pnum_a'])
@@ -233,7 +235,7 @@ def reg_confirm_email():
     reg['direction'] = seat.direction
     reg['game_desc'] = game_desc[reg['game']]
     reg['flight_desc'] = flight_desc[reg['flight']]
-    logging.info("Registration: %s", reg)
+    logging.info("Confirmed registration: %s", reg)
     with open(confirm_file,"w") as f:
       json.dump(reg, f, sort_keys=True, indent=4, separators=(',',': '))
 
