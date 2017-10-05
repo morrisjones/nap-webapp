@@ -35,6 +35,7 @@ in the same flight in both unit finals.)</li>
 at this link</li>
 </ul>
 
+<p class="attention">The October 15 game is not taking any more entries.</p>
 
 % if defined('error_messages'):
 % for msg in error_messages:
@@ -54,7 +55,7 @@ at this link</li>
 <form method="POST" action="/registration/register">
 <p><label><h3 style="margin-bottom: 0;">Choose which game:</h3><br/>
 <select name="game">
-<option value="UF1" {{'selected' if game == 'UF1' else ''}}>South Bay Bridge Club, October 15, 10:00 a.m.</option>
+<!-- <option value="UF1" {{'selected' if game == 'UF1' else ''}}>South Bay Bridge Club, October 15, 10:00 a.m.</option> -->
 <option value="UF2" {{'selected' if game == 'UF2' else ''}}>Long Beach Bridge Club, November 5, 10:00 a.m.</option>
 </select>
 </h3></label>

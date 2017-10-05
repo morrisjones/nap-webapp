@@ -75,3 +75,9 @@ input {
 select {
     font-size: 100%;
 }
+.attention {
+    background-color: #faf;
+    width: 500px;
+    padding: 10px;
+    border: 2px solid black;
+}
