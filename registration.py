@@ -245,3 +245,22 @@ def reg_confirm_email():
 
   logging.debug("end /confirm")
   return template('reg/email_confirm',**reg)
+
+@reg_app.get('/entries/<game>')
+def entries(game):
+  logging.debug("begin /registration/entries/%s" % game)
+  all_entries = {
+    'game': game_desc[game],
+  }
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_TREE'])
+  nap.load_players()
+  reg = {}
+  for flight in ('a','b','c'):
+    reg[flight] = {
+      'max_table': nap.prereg[game][flight].find_max_table(),
+      'section': nap.prereg[game][flight].get_section(),
+    }
+  all_entries['reg'] = reg
+  logging.debug("end /registration/entries/%s" % game)
+  return template('reg/entries',**all_entries)
