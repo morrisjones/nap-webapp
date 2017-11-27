@@ -35,8 +35,6 @@ in the same flight in both unit finals.)</li>
 at this link</li>
 </ul>
 
-<p class="attention">The October 15 game is not taking any more entries.</p>
-
 % if defined('error_messages'):
 % for msg in error_messages:
 <h3 style="color: red;">
