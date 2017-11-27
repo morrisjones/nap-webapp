@@ -107,6 +107,29 @@ def summary():
       total_players=total_players,
       flight_totals=flight_totals)
 
+@app.get('/unit-final-summary')
+def unit_final_summary():
+  logging.debug("begin /unit-final-summary")
+  nap = Nap()
+  nap.load_games(os.environ['GAMEFILE_UNIT_FINALS'])
+  nap.load_players()
+  total_players = len(nap.players)
+  flight_totals = nap.flight_totals()
+  players = []
+  for p in sorted(nap.players):
+    players.append({
+      'name': p.terse(),
+      'pnum': p.pnum,
+      'flta': ('Q' if p.is_qual('a') else ''),
+      'fltb': ('Q' if p.is_qual('b') else ''),
+      'fltc': ('Q' if p.is_qual('c') else ''),
+    })
+  logging.debug("end /unit-final-summary")
+  return template('psummary',
+                  title='Unit Final Qualifiers',
+                  players=players,
+                  total_players=total_players,
+                  flight_totals=flight_totals)
 
 @app.get('/flta')
 def flta():

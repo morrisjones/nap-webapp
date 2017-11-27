@@ -3,14 +3,8 @@
 <div style="margin-left: 20px;">
 <p><b>Unit Final (District Semi-Final) Game Schedule:</b></p>
 <ul>
-<li>Sunday, October 15, 10:00 a.m., South Bay Bridge Club<br/>
-<a href="http://thecommongame.com/ClubWebHost/138289/"><b>Click here for Game results</b></a>,
-courtesy of the Pat Abbey Regency Bridge Club in Glendale and TheCommonGame
-</li>
-<li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club<br/>
-<a href="http://thecommongame.com/ClubWebHost/138289/"><b>Click here for Game results</b></a>,
-courtesy of the Pat Abbey Regency Bridge Club in Glendale and TheCommonGame
-</li>
+<li>Sunday, October 15, 10:00 a.m., South Bay Bridge Club</li>
+<li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club</li>
 </ul>
 <p><b>District Final</b></p>
 <ul>
@@ -18,12 +12,15 @@ courtesy of the Pat Abbey Regency Bridge Club in Glendale and TheCommonGame
 </ul>
 </div>
 
-<p class="attention">Pre-registration for Unit Final 2 closes on Saturday evening.
-<i>Help us plan the game!</i> Please register now if you can.
-</p>
+<h3><a href="https://results.bridgemojo.com/unit-final/">Unit Final Results</a></h3>
 
-<h3><a href="/registration">Register here to play in a semi-final</a></h3>
-<h3><a href="/registration/show">See current attendance at the Unit Final</a></h3>
+<h3><a href="/unit-final-summary">Summary of District Final Qualifiers</a></h3>
+
+<!-- <h3><a href="/registration">Register here to play in a semi-final</a></h3> -->
+<!-- <h3><a href="/registration/show">See current attendance at the Unit Final</a></h3> -->
+
+<h2>Results compiled from club qualifying games</h2>
+
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
 <h3><a href="/summary">Summary of all qualified players</a></h3>
 
