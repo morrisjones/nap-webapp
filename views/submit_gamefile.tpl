@@ -23,14 +23,15 @@ the file was saved when you generated the report, and select that file.</p>
 
 <form name="gamefile" method="post" enctype="multipart/form-data" action="/submit_gamefile_confirm">
 
-<script src='https://www.google.com/recaptcha/api.js'></script>
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 <p><label>Click browse to select a game file (or CSV "NAP Report") to submit:<br/>&nbsp;<br/><input name="gamefile1" type="file"/></label></p>
 <script type="text/javascript">
 function submitform() {
     document.gamefile.submit();
 }
 </script>
-<button style="font-size: 100%;" class="g-recaptcha"
+<button style="font-size: 100%;">Submit</button>
+<!-- <button style="font-size: 100%;" class="g-recaptcha"
     data-sitekey="6LdbS18UAAAAAMmYPKVpeWGw60Sq6QasY3iAS2bU"
-    data-callback="submitform">Submit</button>
+    data-callback="submitform">Submit</button> -->
 </form>

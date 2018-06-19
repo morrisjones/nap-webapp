@@ -172,7 +172,7 @@ def submit_gamefile_form():
 @app.post('/submit_gamefile_confirm')
 def submit_gamefile_result():
   logging.debug("start post /submit_gamefile_confirm")
-  logging.info("recaptcha: " + request.forms.get('g-recaptcha-response'))
+  # logging.info("recaptcha: " + request.forms.get('g-recaptcha-response'))
 
   # TODO
   # Call the Google API to validate the recaptcha response
