@@ -5,7 +5,8 @@
 <h2>Confirm submitting Game File?</h2>
 <p>
 <form method="post" action="/confirm_gamefile">
-<input name="club_dir" type="hidden" value="{{club_dir}}"/>
+<input name="upload_dir" type="hidden" value="{{upload_dir}}"/>
+<input name="club_num" type="hidden" value="{{club_num}}"/>
 <input name="gamefile_name" type="hidden" value="{{gamefile_name}}"/>
 <input name="confirm" type="radio" value="yes" checked/>Yes, submit this game file<br/>
 <input name="confirm" type="radio" value="no"/>No, discard this upload<br/>

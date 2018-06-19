@@ -1,6 +1,7 @@
 import os, string, re
 from registration import reg_app
 from find import find_app
+import random
 import bottle
 from bottle import Bottle, template, static_file, get, post, request, redirect
 from nap.nap import Nap
@@ -171,21 +172,25 @@ def submit_gamefile_form():
 @app.post('/submit_gamefile_confirm')
 def submit_gamefile_result():
   logging.debug("start post /submit_gamefile_confirm")
-  # First check for robots
-  if not bool(re.match('bridge',request.forms.get('testfield'),re.IGNORECASE)):
-    return template('no_robots')
+  logging.info("recaptcha: " + request.forms.get('g-recaptcha-response'))
 
-  # Use the clubname to make a subdirectory for the gamefile
-  clubname = request.forms.get('clubname')
-  club_dir = clubname.translate(None, string.punctuation)
-  club_dir = club_dir.replace(' ','-')
-  club_dir = club_dir.lower()
+  # TODO
+  # Call the Google API to validate the recaptcha response
+  # See here: https://developers.google.com/recaptcha/docs/verify
+
+  # First check for robots
+  # if not bool(re.match('bridge',request.forms.get('testfield'),re.IGNORECASE)):
+  #   return template('no_robots')
+  
+  # Ignore the club name, create an upload dir with a random string
+  lst = [random.choice(string.ascii_lowercase) for n in xrange(10)]
+  upload_dir = "".join(lst)
 
   gf1_upload = request.files.get('gamefile1')
   gamefile_filename = gf1_upload.filename
 
   error_msg = "No errors :)"
-  gamefile_dir = os.path.join(os.environ['GAMEFILE_UPLOADS'],club_dir)
+  gamefile_dir = os.path.join(os.environ['GAMEFILE_UPLOADS'],upload_dir)
   gamefile_path = os.path.join(gamefile_dir,gamefile_filename)
   if not os.path.exists(gamefile_dir):
     os.makedirs(gamefile_dir)
@@ -200,9 +205,12 @@ def submit_gamefile_result():
     upload_game = upload_nap.load_game(gamefile_path)
     upload_game_key = upload_game.get_key()
     upload_nap.load_players()
+    game = upload_nap.games[upload_game_key]
+    club_num = game.get_club_num()
   except GamefileException, e:
     is_error = True
     error_msg = e.value
+    club_num = "error_club_num"
 
   # Check to see if this game is already in the data set
   if not is_error:
@@ -214,10 +222,10 @@ def submit_gamefile_result():
       error_msg = "This game appears to be in the data set already."
 
   fields = {}
-  fields['clubname'] = request.forms.get('clubname')
+  fields['club_num'] = club_num
   fields['testfield'] = request.forms.get('testfield')
   fields['gamefile_name'] = gamefile_filename
-  fields['club_dir'] = club_dir
+  fields['upload_dir'] = upload_dir
   fields['error_msg'] = error_msg
   fields['is_error'] = is_error
 
@@ -239,14 +247,15 @@ def confirm_gamefile():
   logging.debug("begin post /confirm_gamefile")
   confirm = request.forms.get('confirm')
   gamefile_name = request.forms.get('gamefile_name')
-  club_dir = request.forms.get('club_dir')
+  upload_dir = request.forms.get('upload_dir')
+  club_num = request.forms.get('club_num')
 
   if confirm != 'yes':
     redirect('/')
     return
 
-  src_file = os.path.join(os.environ['GAMEFILE_UPLOADS'],club_dir,gamefile_name)
-  dest_path = os.path.join(os.environ['GAMEFILE_TREE'],club_dir)
+  src_file = os.path.join(os.environ['GAMEFILE_UPLOADS'],upload_dir,gamefile_name)
+  dest_path = os.path.join(os.environ['GAMEFILE_TREE'],club_num)
   dest_file = os.path.join(dest_path,gamefile_name)
   if not os.path.exists(dest_path):
     os.makedirs(dest_path)
@@ -259,7 +268,7 @@ def confirm_gamefile():
     os.rename(dest_file,backup)
   os.rename(src_file,dest_file)
 
-  logging.info('New gamefile uploaded club: %s file: %s' % (club_dir,gamefile_name))
+  logging.info('New gamefile uploaded club: %s file: %s' % (upload_dir,gamefile_name))
   logging.debug("end post /confirm_gamefile")
   return template('success')
 
