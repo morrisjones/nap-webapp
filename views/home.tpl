@@ -1,4 +1,7 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
+
+<!-- OLD Unit Final and District Final schedule
+
 <h1>Unit and District Playoff Games</h1>
 <div style="margin-left: 20px;">
 <p><b>Unit Final (District Semi-Final) Game Schedule:</b></p>
@@ -15,6 +18,8 @@
 <h3><a href="https://results.bridgemojo.com/unit-final/">Unit Final Results</a></h3>
 
 <h3><a href="/unit-final-summary">Summary of District Final Qualifiers</a></h3>
+
+-->
 
 <!-- <h3><a href="/registration">Register here to play in a semi-final</a></h3> -->
 <!-- <h3><a href="/registration/show">See current attendance at the Unit Final</a></h3> -->
@@ -57,9 +62,11 @@
 </form>
 </p>
 </div>
-<!--
+
 <h3>Club managers and directors: <a href="/submit_gamefile">Submit new game file</a></h3>
--->
-<h3><a href="/unit-final-flier.pdf">Click here for the Unit Final flier PDF</a></h3>
+
+<!-- <h3><a href="/unit-final-flier.pdf">Click here for the Unit Final flier PDF</a></h3> -->
+
 <p>&nbsp;</p>
+
 <p><a href="/appnotes">Application notes here</a></p>
