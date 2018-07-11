@@ -2,19 +2,6 @@
 
 <!-- OLD Unit Final and District Final schedule
 
-<h1>Unit and District Playoff Games</h1>
-<div style="margin-left: 20px;">
-<p><b>Unit Final (District Semi-Final) Game Schedule:</b></p>
-<ul>
-<li>Sunday, October 15, 10:00 a.m., South Bay Bridge Club</li>
-<li>Sunday, November 5, 10:00 a.m., Long Beach Bridge Club</li>
-</ul>
-<p><b>District Final</b></p>
-<ul>
-<li>Sunday, January 14, 10:00 a.m., San Marino Bridge Club, 1800 Huntington Drive</li>
-</ul>
-</div>
-
 <h3><a href="https://results.bridgemojo.com/unit-final/">Unit Final Results</a></h3>
 
 <h3><a href="/unit-final-summary">Summary of District Final Qualifiers</a></h3>
@@ -52,7 +39,7 @@
 <p>
 <form method="get" action="/find/game">
 <label>Select an individual game:
-<select name="game_index" onchange="this.form.submit()"">
+<select name="game_index" onchange="this.form.submit();">
   <option value="999" selected>Choose a game:</option>
 % for idx, g in enumerate(games):
   <option value="{{idx}}">{{g['name']}} {{g['date']}} {{g['session']}}</option>
@@ -64,6 +51,23 @@
 </div>
 
 <h3>Club managers and directors: <a href="/submit_gamefile">Submit new game file</a></h3>
+
+<h2>2018 Unit and District Playoff Games</h2>
+<div style="margin-left: 20px;">
+<p><b>Unit Final Game Schedule:</b></p>
+<ul>
+<li>Sunday, October 21, 10:00 a.m., San Marino Bridge Club, 1800 Huntington Drive</li>
+<li>Sunday, November 18, 10:00 a.m., Long Beach Bridge Club</li>
+</ul>
+<p><b>District Final</b></p>
+<ul>
+<li>Sunday, December 9, 10:00 a.m., South Bay Bridge Club, Lomita</li>
+</ul>
+<p><b>National Final</b></p>
+<ul>
+<li><a href="http://www.acbl.org/tournaments_page/nabcs/upcoming-nabcs/memphis-tn-spring-nabc-march-21-31/">Memphis NABC, March 21-31</a></li>
+</ul>
+</div>
 
 <!-- <h3><a href="/unit-final-flier.pdf">Click here for the Unit Final flier PDF</a></h3> -->
 
