@@ -31,7 +31,7 @@ function fillPnum(e) {
 enter Flight A in the first game, and Flight B in the second, but may not play
 in the same flight in both unit finals.)</li>
 <li>Eligibility is based on recorded masterpoints as of June 1.</li>
-<li>See the full <a href="http://www.bridgewebs.com//acbl23/201718NAPCOC.pdf">Conditions of Contest</a>
+<li>See the full <a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">Conditions of Contest</a>
 at this link</li>
 </ul>
 
@@ -53,8 +53,8 @@ at this link</li>
 <form method="POST" action="/registration/register">
 <p><label><h3 style="margin-bottom: 0;">Choose which game:</h3><br/>
 <select name="game">
-<!-- <option value="UF1" {{'selected' if game == 'UF1' else ''}}>South Bay Bridge Club, October 15, 10:00 a.m.</option> -->
-<option value="UF2" {{'selected' if game == 'UF2' else ''}}>Long Beach Bridge Club, November 5, 10:00 a.m.</option>
+<option value="UF1" {{'selected' if game == 'UF1' else ''}}>San Marino Bridge Club, October 21, 10:00 a.m.</option>
+<option value="UF2" {{'selected' if game == 'UF2' else ''}}>Long Beach Bridge Club, November 18, 10:00 a.m.</option>
 </select>
 </h3></label>
 </p>

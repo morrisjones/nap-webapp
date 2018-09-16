@@ -3,9 +3,9 @@
 <h2><a href="/registration/register">Register for a semi-final game</a></h2>
 % for uf in ('UF1','UF2'):
 % if uf == 'UF1':
-<h3>Unit Final 1 - South Bay Bridge Club Oct. 15 10:00 a.m.</h3>
+<h3>Unit Final 1 - San Marino Bridge Club Oct. 21 10:00 a.m.</h3>
 % elif uf == 'UF2':
-<h3>Unit Final 2 - Long Beach Bridge Club Nov. 5 10:00 a.m.</h3>
+<h3>Unit Final 2 - Long Beach Bridge Club Nov. 18 10:00 a.m.</h3>
 %end
 % for flight in ('a','b','c'):
 <h4>Flight {{flight.upper()}}</h4>
