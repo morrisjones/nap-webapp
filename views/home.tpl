@@ -8,6 +8,11 @@
 
 -->
 
+<h2>Qualify at Your Local Club</h2>
+
+<p>NAP Qualifier games are listed on the <a href="https://www.bridgewebs.com/cgi-bin/bwom/bw.cgi?club=acbl23&pid=display_month">
+District 23 web site calendar.</a></p>
+
 <h2>2019 Unit and District Playoff Games</h2>
 <div style="margin-left: 20px;">
 <p><b>Unit Final Game Schedule:</b></p>
@@ -21,7 +26,7 @@
 </ul>
 <p><b>National Final</b></p>
 <ul>
-<li><a href="https://nabc.acbl.org/upcoming-nabc/">Colubmus, Ohio, NABC, March 19-29</a></li>
+<li><a href="https://nabc.acbl.org/upcoming-nabc/">Columbus, Ohio, NABC, March 19-29</a></li>
 </ul>
 </div>
 
