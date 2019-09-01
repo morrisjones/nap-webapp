@@ -30,6 +30,12 @@ District 23 web site calendar.</a></p>
 </ul>
 </div>
 
+<h2>Register to play in a Unit Final</h2>
+<ul>
+<li><a href="/registration">Register here to play in a semi-final</a></li>
+<li><a href="/registration/show">See current attendance at the Unit Final</a></li>
+</ul>
+
 <!-- Registration for Unit Final Games
 
 <h3><a href="/registration">Register here to play in a semi-final</a></h3>
@@ -40,14 +46,21 @@ District 23 web site calendar.</a></p>
 
 <h2>NAP 2019-20 Conditions of Contest</h2>
 
-<h3><a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">Click here</a> for the national CoC</h3>
-
-<h3><a href="/D23-local-coc.pdf">Click here</a> for the District 23 CoC</h3>
+<div style="margin-left: 20px;">
+<ul>
+<li>National Conditions of Contest: <a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">Click here</a></li>
+<li>District 23 local Conditions of Contest: <a href="/D23-local-coc.pdf">Click here</a></li>
+</ul>
+</div>
 
 <h2>Results compiled from club qualifying games</h2>
 
-<h3><a href="/clubgames">List of club games reported to date</a></h3>
-<h3><a href="/summary">Summary of all qualified players</a></h3>
+<div style="margin-left: 20px;">
+<ul>
+<li><a href="/clubgames">List of club games reported to date</a></li>
+<li><a href="/summary">Summary of all qualified players</a></li>
+</ul>
+</div>
 
 <h3>Qualifiers by individual club, game, or player</h3>
 <div style="margin-left: 20px;">

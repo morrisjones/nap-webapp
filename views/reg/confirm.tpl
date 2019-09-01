@@ -1,9 +1,9 @@
 % rebase('nap-frame.tpl',title='North American Pairs, District 23')
 <%
 if game == 'UF1':
-  game_desc = "Oct. 21, San Marino Bridge Club, 10:00 a.m."
+  game_desc = "Sept. 15, Long Beach Bridge Club, 10:00 a.m."
 elif game == 'UF2':
-  game_desc = "Nov. 18, Long Beach Bridge Club, 10:00 a.m."
+  game_desc = "Oct. 20, San Marino Bridge Club, 10:00 a.m."
 else:
   game = "Error, bad game code: '%s'" % game
 end
