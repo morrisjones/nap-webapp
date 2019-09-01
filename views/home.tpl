@@ -42,6 +42,8 @@ District 23 web site calendar.</a></p>
 
 <h3><a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">Click here</a> for the national CoC</h3>
 
+<h3><a href="/D23-local-coc.pdf">Click here</a> for the District 23 CoC</h3>
+
 <h2>Results compiled from club qualifying games</h2>
 
 <h3><a href="/clubgames">List of club games reported to date</a></h3>
