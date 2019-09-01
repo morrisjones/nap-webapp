@@ -26,7 +26,7 @@ District 23 web site calendar.</a></p>
 </ul>
 <p><b>National Final</b></p>
 <ul>
-<li><a href="https://nabc.acbl.org/upcoming-nabc/">Columbus, Ohio, NABC, March 19-29</a></li>
+<li><a href="https://nabc.acbl.org/columbus/">Columbus, Ohio, NABC, March 19-29</a></li>
 </ul>
 </div>
 
