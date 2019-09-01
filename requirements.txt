@@ -1,2 +1,2 @@
 bottle==0.12.13
-git+git://github.com/morrisjones/nap.git@0.8.0
+git+git://github.com/morrisjones/nap.git@0.8.2
