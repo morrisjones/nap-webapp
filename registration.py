@@ -15,8 +15,8 @@ valid_pnum = re.compile('^[0-9J-R]\d\d\d\d\d\d')
 reg_form_keys = ('game', 'flight', 'player_a', 'pnum_a', 'player_b', 'pnum_b',
          'req_ns', 'email', 'human', 'confirm',)
 game_desc = {
-  'UF1': "Sunday, October 21, 10:00 a.m., San Marino Bridge Club",
-  'UF2': "Sunday, November 18, 10:00 a.m., Long Beach Bridge Center",
+  'UF1': "Sunday, September 15, 10:00 a.m., Long Beach Bridge Center",
+  'UF2': "Sunday, October 20, 10:00 a.m., San Marino Bridge Club",
 }
 flight_desc = {
   'a': "A (Open)",
