@@ -36,7 +36,7 @@ District 23 web site calendar.</a></p>
 <li><a href="/registration/show">See current attendance at the Unit Final</a></li>
 </ul>
 
-<!-- Registration for Unit Final Games
+<!-- Registration for Unit Final Games (old version)
 
 <h3><a href="/registration">Register here to play in a semi-final</a></h3>
 <h3><a href="/registration/show">See current attendance at the Unit Final</a></h3>
@@ -48,8 +48,8 @@ District 23 web site calendar.</a></p>
 
 <div style="margin-left: 20px;">
 <ul>
-<li>National Conditions of Contest: <a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">Click here</a></li>
-<li>District 23 local Conditions of Contest: <a href="/D23-local-coc.pdf">Click here</a></li>
+<li><a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">National Conditions of Contest</a></li>
+<li><a href="/D23-local-coc.pdf">District 23 Conditions of Contest</a></li>
 </ul>
 </div>
 
