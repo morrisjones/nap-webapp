@@ -34,6 +34,7 @@ District 23 web site calendar.</a></p>
 <ul>
 <li><a href="/registration">Register here to play in a semi-final</a></li>
 <li><a href="/registration/show">See current attendance at the Unit Final</a></li>
+<li><a href="/2019-unit-final-flier.pdf">Download and print the Unit Final Flier</a></li>
 </ul>
 
 <!-- Registration for Unit Final Games (old version)
@@ -46,12 +47,10 @@ District 23 web site calendar.</a></p>
 
 <h2>NAP 2019-20 Conditions of Contest</h2>
 
-<div style="margin-left: 20px;">
 <ul>
 <li><a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">National Conditions of Contest</a></li>
 <li><a href="/D23-local-coc.pdf">District 23 Conditions of Contest</a></li>
 </ul>
-</div>
 
 <h2>Results compiled from club qualifying games</h2>
 
