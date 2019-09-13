@@ -45,11 +45,12 @@ District 23 web site calendar.</a></p>
 
 -->
 
-<h2>NAP 2019-20 Conditions of Contest</h2>
+<h2>NAP 2019-20 Conditions of Contest and Convention Charts</h2>
 
 <ul>
 <li><a href="http://web2.acbl.org/documentLibrary/play/NAP/CoC.pdf">National Conditions of Contest</a></li>
 <li><a href="/D23-local-coc.pdf">District 23 Conditions of Contest</a></li>
+<li><a href="https://web2.acbl.org/documentlibrary/about/181AttachmentD.pdf">2018 Convention Charts</a></li>
 </ul>
 
 <h2>Results compiled from club qualifying games</h2>
