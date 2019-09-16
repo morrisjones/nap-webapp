@@ -53,7 +53,7 @@ at this link</li>
 <form method="POST" action="/registration/register">
 <p><label><h3 style="margin-bottom: 0;">Choose which game:</h3><br/>
 <select name="game">
-<option value="UF1" {{'selected' if game == 'UF1' else ''}}>Long Beach Bridge Club, September 15, 10:00 a.m.</option>
+<!-- <option value="UF1" {{'selected' if game == 'UF1' else ''}}>Long Beach Bridge Club, September 15, 10:00 a.m.</option> -->
 <option value="UF2" {{'selected' if game == 'UF2' else ''}}>San Marino Bridge Club, October 20, 10:00 a.m.</option>
 </select>
 </h3></label>
