@@ -17,7 +17,9 @@ District 23 web site calendar.</a></p>
 <div style="margin-left: 20px;">
 <p><b>Unit Final Game Schedule:</b></p>
 <ul>
-<li>Sunday, September 15, 10:00 a.m., Long Beach Bridge Club</li>
+<li>Sunday, September 15, 10:00 a.m., Long Beach Bridge Club
+<a href="https://results.bridgemojo.com">Results here</a>
+</li>
 <li>Sunday, October 20, 10:00 a.m., San Marino Bridge Club, 1800 Huntington Drive</li>
 </ul>
 <p><b>District Final</b></p>
