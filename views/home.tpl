@@ -24,6 +24,7 @@ District 23 web site calendar.</a></p>
 </ul>
 <p><b>District Final</b></p>
 <ul>
+<li><a href="/unit-final-summary">Summary of qualifiers from Unit Final games</a></li>
 <li>Sunday, November 17, 10:00 a.m., South Bay Bridge Club, Lomita</li>
 </ul>
 <p><b>National Final</b></p>
